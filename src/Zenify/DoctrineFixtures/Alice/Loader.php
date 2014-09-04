@@ -37,10 +37,10 @@ class Loader extends Nette\Object
 	public function load($files)
 	{
 		if ( ! is_array($files)) {
-			$files = [$files];
+			$files = array($files);
 		}
 
-		$objects = [];
+		$objects = array();
 		foreach ($files as $file) {
 			if ( ! file_exists($file)) {
 				throw new \Exception("File $file not found");
