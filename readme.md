@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Zenify/DoctrineFixtures.svg?branch=master)](https://travis-ci.org/Zenify/DoctrineFixtures)
 [![Downloads this Month](https://img.shields.io/packagist/dm/zenify/doctrine-fixtures.svg)](https://packagist.org/packages/zenify/doctrine-fixtures)
+[![Latest stable](https://img.shields.io/packagist/v/zenify/doctrine-fixtures.svg)](https://packagist.org/packages/zenify/doctrine-fixtures)
+
 
 This package implements all you need for effective dummy data generation:
 
