@@ -11,10 +11,10 @@
 	"require": {
 		"kdyby/console": "~2.0",
 		"kdyby/doctrine": "~2.0",
-        "doctrine/data-fixtures": "~1.0@dev",
-        "fzaninotto/faker": "~1.4",
-        "nelmio/alice": "~1.7",
-        "illuminate/console": "~4.1"
+		"doctrine/data-fixtures": "1.0.x@dev",
+		"fzaninotto/faker": "~1.4",
+		"nelmio/alice": "~1.7",
+		"illuminate/console": "~4.1"
 	},
 	"require-dev": {
 		"nette/bootstrap": "~2.0",
