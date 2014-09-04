@@ -1,0 +1,3 @@
+ZenifyTests\DoctrineFixtures\Entities\Product:
+	"product{1..100}":
+		name: "<shortName()>"

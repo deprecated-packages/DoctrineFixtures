@@ -1,0 +1,21 @@
+extensions:
+	console: Kdyby\Console\DI\ConsoleExtension
+	events: Kdyby\Events\DI\EventsExtension
+	annotations: Kdyby\Annotations\DI\AnnotationsExtension
+	doctrine: Kdyby\Doctrine\DI\OrmExtension
+	fixtures: Zenify\DoctrineFixtures\DI\FixturesExtension
+
+
+doctrine:
+	driver: pdo_sqlite
+	memory: true
+	logging: ../../tmp/log.sql
+
+
+fixtures:
+	enabled: TRUE
+	faker:
+		providers:
+			- ZenifyTests\DoctrineFixtures\Faker\Providers\ProductName
+
+
