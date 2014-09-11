@@ -72,7 +72,7 @@ class FixturesExtension extends CompilerExtension
 	/**
 	 * @param array $config
 	 */
-	private function loadFaker($config)
+	protected function loadFaker($config)
 	{
 		$builder = $this->getContainerBuilder();
 
@@ -91,7 +91,7 @@ class FixturesExtension extends CompilerExtension
 	/**
 	 * @param array $config
 	 */
-	private function loadAlice($config)
+	protected function loadAlice($config)
 	{
 		$builder = $this->getContainerBuilder();
 		$builder->addDefinition($this->prefix('alice.loader'))
@@ -112,7 +112,7 @@ class FixturesExtension extends CompilerExtension
 	/**
 	 * @param array $config
 	 */
-	private function validateConfig($config)
+	protected function validateConfig($config)
 	{
 		Validators::assertField($config, 'faker', 'array');
 		Validators::assertField($config['faker'], 'providers', 'list');
