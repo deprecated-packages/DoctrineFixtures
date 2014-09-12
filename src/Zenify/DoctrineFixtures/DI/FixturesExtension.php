@@ -9,6 +9,7 @@ namespace Zenify\DoctrineFixtures\DI;
 
 use Kdyby\Console\DI\ConsoleExtension;
 use Nette\DI\CompilerExtension;
+use Nette\Utils\AssertionException;
 use Nette\Utils\Validators;
 
 
@@ -47,7 +48,7 @@ class FixturesExtension extends CompilerExtension
 		if ($config['enabled'] === FALSE) {
 			return;
 		}
-		$this->validateConfig($config);
+		$this->validateConfigTypes($config);
 
 		$builder = $this->getContainerBuilder();
 
@@ -110,9 +111,9 @@ class FixturesExtension extends CompilerExtension
 
 
 	/**
-	 * @param array $config
+	 * @throws AssertionException
 	 */
-	protected function validateConfig($config)
+	protected function validateConfigTypes(array $config)
 	{
 		Validators::assertField($config, 'faker', 'array');
 		Validators::assertField($config['faker'], 'providers', 'list');
