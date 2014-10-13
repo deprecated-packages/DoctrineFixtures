@@ -12,13 +12,20 @@ use Zenify;
 
 abstract class DatabaseTestCase extends TestCase
 {
-	/** @var EntityManager */
+
+	/**
+	 * @var EntityManager
+	 */
 	protected $em;
 
-	/** @var EntityDao */
+	/**
+	 * @var EntityDao
+	 */
 	protected $productDao;
 
-	/** @var Nette\DI\Container */
+	/**
+	 * @var Nette\DI\Container
+	 */
 	protected $container;
 
 

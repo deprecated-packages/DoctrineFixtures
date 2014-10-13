@@ -14,7 +14,10 @@ use Nette\DI\Container;
 
 class Loader extends Doctrine\Common\DataFixtures\Loader
 {
-	/** @var Container */
+
+	/**
+	 * @var Container
+	 */
 	private $container;
 
 

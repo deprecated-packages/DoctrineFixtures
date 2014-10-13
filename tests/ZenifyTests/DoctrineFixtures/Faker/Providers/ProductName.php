@@ -7,7 +7,10 @@ use Faker\Provider\Base;
 
 class ProductName extends Base
 {
-	/** @var array */
+
+	/**
+	 * @var array
+	 */
 	public static $randomNames = array(
 		'Hair of love',
 		'Eye of xray',

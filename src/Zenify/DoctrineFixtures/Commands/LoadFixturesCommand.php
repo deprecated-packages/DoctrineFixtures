@@ -17,6 +17,7 @@ use Zenify\DoctrineDataFixtures\Loader;
 
 class LoadFixturesCommand extends Command
 {
+
 	/**
 	 * @inject
 	 * @var ORMPurger
@@ -35,10 +36,14 @@ class LoadFixturesCommand extends Command
 	 */
 	public $loader;
 
-	/** @var string */
+	/**
+	 * @var string
+	 */
 	protected $name = 'doctrine:fixtures:load';
 
-	/** @var string */
+	/**
+	 * @var string
+	 */
 	protected $description = 'Load data fixtures to your database';
 
 
@@ -111,12 +116,13 @@ EOT
 		$fixtures = $this->loader->getFixtures();
 		if ( ! $fixtures) {
 			throw new InvalidArgumentException(
-				sprintf('Could not find any fixtures to load in: %s', "\n\n- ".implode("\n- ", $paths))
+				sprintf('Could not find any fixtures to load in: %s', "\n\n- " . implode("\n- ", $paths))
 			);
 		}
 
-		$this->purger->setPurgeMode($this->option('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE);
-		$this->executor->setLogger(function($message) {
+		$purgeMode = $this->option('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
+		$this->purger->setPurgeMode($purgeMode);
+		$this->executor->setLogger(function ($message) {
 			$this->line(sprintf('  <comment>></comment> <info>%s</info>', $message));
 		});
 		$this->executor->execute($fixtures, $this->option('append'));

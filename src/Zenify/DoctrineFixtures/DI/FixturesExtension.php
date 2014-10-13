@@ -15,7 +15,10 @@ use Nette\Utils\Validators;
 
 class FixturesExtension extends CompilerExtension
 {
-	/** @var array */
+
+	/**
+	 * @var array
+	 */
 	protected $defaults = array(
 		'faker' => array(
 			'providers' => array(
@@ -32,7 +35,9 @@ class FixturesExtension extends CompilerExtension
 		'enabled' => FALSE
 	);
 
-	/** @var array */
+	/**
+	 * @var array
+	 */
 	private $fakerProviders = array();
 
 

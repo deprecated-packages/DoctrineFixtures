@@ -15,10 +15,15 @@ use Nette;
 
 class Loader extends Nette\Object
 {
-	/** @var EntityManager */
+
+	/**
+	 * @var EntityManager
+	 */
 	private $em;
 
-	/** @var Loader\Neon */
+	/**
+	 * @var Loader\Neon
+	 */
 	private $neonLoader;
 
 
