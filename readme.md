@@ -15,10 +15,10 @@ This package implements all you need for effective dummy data generation:
 
 ## Installation
 
-The best way to install is via [Composer](http://getcomposer.org/).
+To get the latest version, run [Composer](http://getcomposer.org/) command:
 
 ```sh
-$ composer require zenify/doctrine-fixtures:~1.0
+$ composer require zenify/doctrine-fixtures
 ```
 
 
