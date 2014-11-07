@@ -43,7 +43,7 @@ class Neon extends Base
 		};
 		$data = $includeWrapper();
 
-		if (1 === $data) {
+		if ($data === 1) {
 			// include didn't return data but included correctly, parse it as yaml
 			$neon = ob_get_clean();
 			$data = Nette\Neon\Neon::decode($neon);
