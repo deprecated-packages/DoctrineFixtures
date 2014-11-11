@@ -9,10 +9,13 @@ namespace Zenify\DoctrineFixtures\Commands;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Illuminate\Console\Command;
+use Kdyby\Console\InvalidArgumentException;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Zenify\DoctrineDataFixtures\Loader;
+use Symfony\Component\Console\Output\OutputInterface;
+use Zenify\DoctrineFixtures\DataFixtures\Loader;
 
 
 class LoadFixturesCommand extends Command
@@ -36,20 +39,21 @@ class LoadFixturesCommand extends Command
 	 */
 	public $loader;
 
-	/**
-	 * @var string
-	 */
-	protected $name = 'doctrine:fixtures:load';
-
-	/**
-	 * @var string
-	 */
-	protected $description = 'Load data fixtures to your database';
-
 
 	protected function configure()
 	{
-		$this->setHelp(<<<EOT
+		$this->setName('doctrine:fixtures:load')
+			->setAliases(array('doctrine:fixture:load'))
+			->setDescription('Load data fixtures to your database')
+			->setDefinition(array(
+				new InputArgument('fixtures', InputArgument::REQUIRED | InputArgument::IS_ARRAY,
+					'The directory(/ies) to load data fixtures from.'),
+				new InputOption('append', NULL, InputOption::VALUE_OPTIONAL,
+						'Append the data fixtures instead of deleting all data from the database first.', TRUE),
+				new InputOption('purge-with-truncate', NULL, InputOption::VALUE_NONE,
+						'Purge data by using a database-level TRUNCATE statement')
+			))
+			->setHelp(<<<EOT
 The <info>doctrine:fixtures:load</info> command loads data fixtures from specified directory:
 
   <info>php www/index.php doctrine:fixtures:load /path/to/fixtures</info>
@@ -71,41 +75,15 @@ EOT
 	}
 
 
-	/**
-	 * @return array
-	 */
-	protected function getArguments()
+	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		return array(
-			array('fixtures', InputArgument::REQUIRED | InputArgument::IS_ARRAY,
-				'The directory(/ies) to load data fixtures from.'),
-		);
-	}
-
-
-	/**
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return array(
-			array('append', NULL, InputOption::VALUE_OPTIONAL,
-				'Append the data fixtures instead of deleting all data from the database first.', TRUE),
-			array('purge-with-truncate', NULL, InputOption::VALUE_NONE,
-				'Purge data by using a database-level TRUNCATE statement')
-		);
-	}
-
-
-	protected function fire()
-	{
-		if ($this->input->isInteractive() && ! $this->option('append')) {
+		if ($input->isInteractive() && ! $input->getOption('append')) {
 			if ( ! $this->ask('Careful, database will be purged. Do you want to continue Y/N ?', FALSE)) {
 				return;
 			}
 		}
 
-		$dirOrFile = $this->argument('fixtures');
+		$dirOrFile = $input->getArgument('fixtures');
 		$paths = is_array($dirOrFile) ? $dirOrFile : array($dirOrFile);
 
 		foreach ($paths as $path) {
@@ -120,12 +98,12 @@ EOT
 			);
 		}
 
-		$purgeMode = $this->option('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
+		$purgeMode = $input->getOption('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
 		$this->purger->setPurgeMode($purgeMode);
-		$this->executor->setLogger(function ($message) {
-			$this->line(sprintf('  <comment>></comment> <info>%s</info>', $message));
+		$this->executor->setLogger(function ($message) use ($output) {
+			$output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
 		});
-		$this->executor->execute($fixtures, $this->option('append'));
+		$this->executor->execute($fixtures, $input->getOption('append'));
 	}
 
 }

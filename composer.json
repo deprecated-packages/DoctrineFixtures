@@ -3,18 +3,14 @@
 	"description": "Doctrine Fixtures, Faker and Alice integration into Nette",
 	"license": "MIT",
 	"authors": [
-		{
-			"name": "Tomáš Votruba",
-			"homepage": "http://tomasvotruba.cz"
-		}
+		{ "name": "Tomáš Votruba", "homepage": "http://tomasvotruba.cz" }
 	],
 	"require": {
 		"kdyby/console": "~2.0",
 		"kdyby/doctrine": "~2.0",
 		"doctrine/data-fixtures": "1.0.x@dev",
 		"fzaninotto/faker": "~1.4",
-		"nelmio/alice": "~1.7",
-		"illuminate/console": "~4.1"
+		"nelmio/alice": "~1.7"
 	},
 	"require-dev": {
 		"nette/bootstrap": "~2.0",

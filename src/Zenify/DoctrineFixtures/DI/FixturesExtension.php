@@ -19,7 +19,7 @@ class FixturesExtension extends CompilerExtension
 	/**
 	 * @var array
 	 */
-	protected $defaults = array(
+	private $defaults = array(
 		'faker' => array(
 			'providers' => array(
 				'Zenify\DoctrineFixtures\Faker\Provider\Strings'
