@@ -26,7 +26,7 @@ Register extensions you need in `config.neon`:
 
 ```yaml
 extensions:
-	- Zenify\DoctrineFixitures\DI\FixturesExtension
+	- Zenify\DoctrineFixtures\DI\FixturesExtension
 ```
 
 
