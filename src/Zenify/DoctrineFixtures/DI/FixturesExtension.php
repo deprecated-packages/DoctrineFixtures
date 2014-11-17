@@ -86,10 +86,10 @@ class FixturesExtension extends CompilerExtension
 			->setClass('Faker\Generator');
 
 		foreach ($config['providers'] as $i => $class) {
-			$provider = $builder->addDefinition($this->prefix('faker.provider.' . $i))
+			$builder->addDefinition($this->prefix('faker.provider.' . $i))
 				->setClass($class);
 
-			$this->fakerProviders[] = '@' . $provider->getClass();
+			$this->fakerProviders[] = '@' . $class;
 		}
 	}
 
