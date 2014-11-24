@@ -72,7 +72,6 @@ class Neon extends Base
 				$includeData = $this->parse($includeFile);
 				$data = Helpers::merge($data, $includeData);
 			}
-
 			unset($data['includes']);
 		}
 

@@ -9,7 +9,6 @@ namespace ZenifyTests\DoctrineFixtures;
 use Nette;
 use Tester\Assert;
 use Tester\TestCase;
-use Zenify;
 
 
 $container = require_once __DIR__ . '/../bootstrap.php';
@@ -17,7 +16,10 @@ $container = require_once __DIR__ . '/../bootstrap.php';
 
 class ExtensionTest extends TestCase
 {
-	/** @var Nette\DI\Container */
+
+	/**
+	 * @var Nette\DI\Container
+	 */
 	private $container;
 
 
@@ -69,4 +71,4 @@ class ExtensionTest extends TestCase
 }
 
 
-\run(new ExtensionTest($container));
+(new ExtensionTest($container))->run();

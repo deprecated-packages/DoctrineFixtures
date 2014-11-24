@@ -19,7 +19,10 @@ $container = require_once __DIR__ . '/../bootstrap.php';
 
 class DoctrineFixturesLoaderTest extends DatabaseTestCase
 {
-	/** @var Loader */
+
+	/**
+	 * @var Loader
+	 */
 	private $fixturesLoader;
 
 
@@ -59,4 +62,4 @@ class DoctrineFixturesLoaderTest extends DatabaseTestCase
 }
 
 
-\run(new DoctrineFixturesLoaderTest($container));
+(new DoctrineFixturesLoaderTest($container))->run();

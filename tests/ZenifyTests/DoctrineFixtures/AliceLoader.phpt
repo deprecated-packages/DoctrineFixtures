@@ -19,7 +19,10 @@ $container = require_once __DIR__ . '/../bootstrap.php';
 
 class AliceLoaderTest extends DatabaseTestCase
 {
-	/** @var Loader */
+
+	/**
+	 * @var Loader
+	 */
 	private $fixturesLoader;
 
 
@@ -49,4 +52,4 @@ class AliceLoaderTest extends DatabaseTestCase
 }
 
 
-\run(new AliceLoaderTest($container));
+(new AliceLoaderTest($container))->run();

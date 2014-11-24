@@ -9,12 +9,14 @@ namespace Zenify\DoctrineFixtures\Commands;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Kdyby\Console\InvalidArgumentException;
+use InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\Question;
 use Zenify\DoctrineFixtures\DataFixtures\Loader;
 
 
@@ -43,16 +45,16 @@ class LoadFixturesCommand extends Command
 	protected function configure()
 	{
 		$this->setName('doctrine:fixtures:load')
-			->setAliases(array('doctrine:fixture:load'))
+			->setAliases(['doctrine:fixture:load'])
 			->setDescription('Load data fixtures to your database')
-			->setDefinition(array(
+			->setDefinition([
 				new InputArgument('fixtures', InputArgument::REQUIRED | InputArgument::IS_ARRAY,
 					'The directory(/ies) to load data fixtures from.'),
 				new InputOption('append', NULL, InputOption::VALUE_OPTIONAL,
 						'Append the data fixtures instead of deleting all data from the database first.', TRUE),
 				new InputOption('purge-with-truncate', NULL, InputOption::VALUE_NONE,
 						'Purge data by using a database-level TRUNCATE statement')
-			))
+			])
 			->setHelp(<<<EOT
 The <info>doctrine:fixtures:load</info> command loads data fixtures from specified directory:
 
@@ -77,14 +79,18 @@ EOT
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
+		/** @var QuestionHelper $questionHelper */
+		$questionHelper = $this->getHelper('question');
+		$question = new Question('Careful, database will be purged. Do you want to continue Y/N ?', FALSE);
+
 		if ($input->isInteractive() && ! $input->getOption('append')) {
-			if ( ! $this->ask('Careful, database will be purged. Do you want to continue Y/N ?', FALSE)) {
+			if ( ! $questionHelper->ask($input, $output, $question)) {
 				return;
 			}
 		}
 
 		$dirOrFile = $input->getArgument('fixtures');
-		$paths = is_array($dirOrFile) ? $dirOrFile : array($dirOrFile);
+		$paths = is_array($dirOrFile) ? $dirOrFile : [$dirOrFile];
 
 		foreach ($paths as $path) {
 			if (is_dir($path)) {

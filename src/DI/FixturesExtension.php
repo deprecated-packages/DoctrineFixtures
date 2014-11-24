@@ -9,7 +9,6 @@ namespace Zenify\DoctrineFixtures\DI;
 
 use Kdyby\Console\DI\ConsoleExtension;
 use Nette\DI\CompilerExtension;
-use Nette\Utils\AssertionException;
 use Nette\Utils\Validators;
 
 
@@ -17,28 +16,28 @@ class FixturesExtension extends CompilerExtension
 {
 
 	/**
-	 * @var array
+	 * @var array[]
 	 */
-	private $defaults = array(
-		'faker' => array(
-			'providers' => array(
+	private $defaults = [
+		'faker' => [
+			'providers' => [
 				'Zenify\DoctrineFixtures\Faker\Provider\Strings'
-			),
-		),
-		'alice' => array(
+			],
+		],
+		'alice' => [
 			'seed' => 1,
 			'locale' => 'cs_CZ',
-			'loaders' => array(
+			'loaders' => [
 				'neon' => 'Zenify\DoctrineFixtures\Alice\Loader\Neon'
-			),
-		),
+			],
+		],
 		'enabled' => FALSE
-	);
+	];
 
 	/**
 	 * @var array
 	 */
-	private $fakerProviders = array();
+	private $fakerProviders = [];
 
 
 	public function __construct()
@@ -75,10 +74,7 @@ class FixturesExtension extends CompilerExtension
 	}
 
 
-	/**
-	 * @param array $config
-	 */
-	protected function loadFaker($config)
+	private function loadFaker(array $config)
 	{
 		$builder = $this->getContainerBuilder();
 
@@ -88,16 +84,12 @@ class FixturesExtension extends CompilerExtension
 		foreach ($config['providers'] as $i => $class) {
 			$builder->addDefinition($this->prefix('faker.provider.' . $i))
 				->setClass($class);
-
 			$this->fakerProviders[] = '@' . $class;
 		}
 	}
 
 
-	/**
-	 * @param array $config
-	 */
-	protected function loadAlice($config)
+	private function loadAlice(array $config)
 	{
 		$builder = $this->getContainerBuilder();
 		$builder->addDefinition($this->prefix('alice.loader'))
@@ -109,16 +101,13 @@ class FixturesExtension extends CompilerExtension
 		foreach ($config['loaders'] as $i => $loader) {
 			$builder->addDefinition($this->prefix('alice.loader.' . $i))
 				->setClass($loader)
-				->setArguments(array($config['locale'], $this->fakerProviders, $config['seed']))
-				->addSetup('setORM', array($this->prefix('@alice.orm.doctrine')));
+				->setArguments([$config['locale'], $this->fakerProviders, $config['seed']])
+				->addSetup('setORM', [$this->prefix('@alice.orm.doctrine')]);
 		}
 	}
 
 
-	/**
-	 * @throws AssertionException
-	 */
-	protected function validateConfigTypes(array $config)
+	private function validateConfigTypes(array $config)
 	{
 		Validators::assertField($config, 'faker', 'array');
 		Validators::assertField($config['faker'], 'providers', 'list');

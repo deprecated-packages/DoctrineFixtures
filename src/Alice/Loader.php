@@ -8,8 +8,6 @@
 namespace Zenify\DoctrineFixtures\Alice;
 
 use Kdyby\Doctrine\EntityManager;
-use Nelmio;
-use Nelmio\Alice\ORM;
 use Nette;
 
 
@@ -42,10 +40,10 @@ class Loader extends Nette\Object
 	public function load($files)
 	{
 		if ( ! is_array($files)) {
-			$files = array($files);
+			$files = [$files];
 		}
 
-		$objects = array();
+		$objects = [];
 		foreach ($files as $file) {
 			if ( ! file_exists($file)) {
 				throw new \Exception("File $file not found");

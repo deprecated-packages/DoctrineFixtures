@@ -6,6 +6,7 @@
 		{ "name": "Tomáš Votruba", "homepage": "http://tomasvotruba.cz" }
 	],
 	"require": {
+		"php": ">=5.4",
 		"kdyby/console": "~2.0",
 		"kdyby/doctrine": "~2.0",
 		"doctrine/data-fixtures": "1.0.x@dev",

@@ -11,11 +11,11 @@ class ProductName extends Base
 	/**
 	 * @var array
 	 */
-	public static $randomNames = array(
+	public static $randomNames = [
 		'Hair of love',
 		'Eye of xray',
 		'Flying shoe'
-	);
+	];
 
 
 	/**
