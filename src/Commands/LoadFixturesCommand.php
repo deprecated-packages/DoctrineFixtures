@@ -106,20 +106,20 @@ EOT
 		$fixtures = $this->loader->getFixtures();
 
 		$aliceFixtures = [];
-		foreach($paths as $path) {
-			if(is_dir($path)) {
+		foreach ($paths as $path) {
+			if (is_dir($path)) {
 				$loaded = $this->aliceLoader->loadFromDirectory($path);
-				$aliceFixtures = array_merge($aliceFixtures , $loaded);
+				$aliceFixtures = array_merge($aliceFixtures, $loaded);
 			}
 		}
 
-		if(empty($aliceFixtures) && empty($fixtures)) {
+		if (empty($aliceFixtures) && empty($fixtures)) {
 			throw new InvalidArgumentException(
-				sprintf('Could not find any fixtures to load in: %s' , "\n\n- " . implode("\n- " , $paths))
+				sprintf('Could not find any fixtures to load in: %s', "\n\n- " . implode("\n- ", $paths))
 			);
 		}
 
-		if(empty($fixtures)) {
+		if (empty($fixtures)) {
 			return;
 		}
 

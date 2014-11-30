@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kdyby\Doctrine\Entities\Attributes\Identifier;
 use Nette\Object;
 
+
 /**
  * Class User
  *

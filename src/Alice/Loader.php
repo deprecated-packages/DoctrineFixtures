@@ -59,6 +59,7 @@ class Loader extends Nette\Object
 		return $objects;
 	}
 
+
 	/**
 	 * Load all neon fixtures files from folder
 	 *
@@ -68,12 +69,12 @@ class Loader extends Nette\Object
 	 */
 	public function loadFromDirectory($path)
 	{
-		if( ! is_dir($path)) {
+		if ( ! is_dir($path)) {
 			throw new \Exception("Folder `$path` not found.");
 		}
 
 		$files = [];
-		foreach(Nette\Utils\Finder::find("*.neon")->from($path) as $file) {
+		foreach (Nette\Utils\Finder::find("*.neon")->from($path) as $file) {
 			$files[] = $file;
 		}
 

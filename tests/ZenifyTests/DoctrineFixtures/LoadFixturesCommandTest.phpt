@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Tester\Assert;
 use Zenify\DoctrineFixtures\Commands\LoadFixturesCommand;
 
+
 $container = require_once __DIR__ . '/../bootstrap.php';
 
 /**
@@ -34,6 +35,7 @@ class LoadFixturesCommandTest extends DatabaseTestCase
 			'question' => new QuestionHelper() ,
 		]));
 	}
+
 
 	public function testLoadAliceFixtures()
 	{
