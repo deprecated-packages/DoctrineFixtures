@@ -68,7 +68,7 @@ class FixturesExtension extends CompilerExtension
 		$builder->addDefinition($this->prefix('command.loadFixtures'))
 			->setClass('Zenify\DoctrineFixtures\Commands\LoadFixturesCommand')
 			->addTag(ConsoleExtension::COMMAND_TAG)
-            ->setInject(TRUE);
+			->setInject(TRUE);
 
 		$this->loadFaker($config['faker']);
 		$this->loadAlice($config['alice']);

@@ -20,37 +20,37 @@ $container = require_once __DIR__ . '/../bootstrap.php';
 class LoadFixturesCommandTest extends DatabaseTestCase
 {
 
-    /**
-     * @var LoadFixturesCommand
-     */
-    protected $command;
+	/**
+	 * @var LoadFixturesCommand
+	 */
+	protected $command;
 
-    protected function setUp()
-    {
-        parent::setUp();
+	protected function setUp()
+	{
+		parent::setUp();
 
-        $this->command = $this->container->getByType('Zenify\DoctrineFixtures\Commands\LoadFixturesCommand');
-        $this->command->setHelperSet(new HelperSet([
-            'question' => new QuestionHelper(),
-        ]));
-    }
+		$this->command = $this->container->getByType('Zenify\DoctrineFixtures\Commands\LoadFixturesCommand');
+		$this->command->setHelperSet(new HelperSet([
+			'question' => new QuestionHelper() ,
+		]));
+	}
 
-    public function testLoadAliceFixtures()
-    {
-        $input = new ArrayInput([
-            'fixtures' => __DIR__ . '/Alice/',
-            '--append' => FALSE,
-        ]);
-        $input->setInteractive(FALSE);
+	public function testLoadAliceFixtures()
+	{
+		$input = new ArrayInput([
+			'fixtures' => __DIR__ . '/Alice/' ,
+			'--append' => FALSE ,
+		]);
+		$input->setInteractive(FALSE);
 
-        $this->command->run($input, new BufferedOutput());
+		$this->command->run($input , new BufferedOutput());
 
-        $products = $this->productDao->findAll();
-        Assert::count(100, $products);
+		$products = $this->productDao->findAll();
+		Assert::count(100 , $products);
 
-        $users = $this->userDao->findAll();
-        Assert::count(10, $users);
-    }
+		$users = $this->userDao->findAll();
+		Assert::count(10 , $users);
+	}
 
 }
 

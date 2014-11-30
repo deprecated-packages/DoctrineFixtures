@@ -50,24 +50,24 @@ class AliceLoaderTest extends DatabaseTestCase
 		}
 	}
 
-    public function testLoadFolder()
-    {
-        $dir = __DIR__ . '/Alice/';
-        $this->fixturesLoader->loadFromDirectory($dir);
+	public function testLoadFolder()
+	{
+		$dir = __DIR__ . '/Alice/';
+		$this->fixturesLoader->loadFromDirectory($dir);
 
-        $products = $this->productDao->findAll();
-        Assert::count(100, $products);
+		$products = $this->productDao->findAll();
+		Assert::count(100 , $products);
 
-        $users = $this->userDao->findAll();
-        Assert::count(10, $users);
+		$users = $this->userDao->findAll();
+		Assert::count(10 , $users);
 
-        /** @var User $user */
-        foreach ($users as $user) {
-            Assert::type('ZenifyTests\DoctrineFixtures\Entities\User', $user);
-            Assert::contains('@', $user->getEmail());
-        }
+		/** @var User $user */
+		foreach($users as $user) {
+			Assert::type('ZenifyTests\DoctrineFixtures\Entities\User' , $user);
+			Assert::contains('@' , $user->getEmail());
+		}
 
-    }
+	}
 
 }
 

@@ -21,12 +21,12 @@ use Nette\Object;
 class User extends Object
 {
 
-    use Identifier;
+	use Identifier;
 
-    /**
-     * @ORM\Column(type="string", nullable=TRUE)
-     * @var string
-     */
-    protected $email;
+	/**
+	 * @ORM\Column(type="string", nullable=TRUE)
+	 * @var string
+	 */
+	protected $email;
 
-} 
+}

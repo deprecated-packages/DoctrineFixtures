@@ -41,11 +41,11 @@ class LoadFixturesCommand extends Command
 	 */
 	public $loader;
 
-    /**
-     * @var \Zenify\DoctrineFixtures\Alice\Loader
-     * @inject
-     */
-    public $aliceLoader;
+	/**
+	 * @var \Zenify\DoctrineFixtures\Alice\Loader
+	 * @inject
+	 */
+	public $aliceLoader;
 
 
 	protected function configure()
@@ -105,23 +105,23 @@ EOT
 		}
 		$fixtures = $this->loader->getFixtures();
 
-        $aliceFixtures = [];
-        foreach ($paths as $path) {
-            if (is_dir($path)) {
-                $loaded = $this->aliceLoader->loadFromDirectory($path);
-                $aliceFixtures = array_merge($aliceFixtures, $loaded);
-            }
-        }
+		$aliceFixtures = [];
+		foreach($paths as $path) {
+			if(is_dir($path)) {
+				$loaded = $this->aliceLoader->loadFromDirectory($path);
+				$aliceFixtures = array_merge($aliceFixtures , $loaded);
+			}
+		}
 
-        if (empty($aliceFixtures) && empty($fixtures) ) {
-            throw new InvalidArgumentException(
-                sprintf('Could not find any fixtures to load in: %s', "\n\n- " . implode("\n- ", $paths))
-            );
-        }
+		if(empty($aliceFixtures) && empty($fixtures)) {
+			throw new InvalidArgumentException(
+				sprintf('Could not find any fixtures to load in: %s' , "\n\n- " . implode("\n- " , $paths))
+			);
+		}
 
-        if (empty($fixtures)) {
-            return;
-        }
+		if(empty($fixtures)) {
+			return;
+		}
 
 		$purgeMode = $input->getOption('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
 		$this->purger->setPurgeMode($purgeMode);
