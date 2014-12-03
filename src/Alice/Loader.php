@@ -64,17 +64,17 @@ class Loader extends Nette\Object
 	 * Load all neon fixtures files from folder
 	 *
 	 * @param string $path
-	 * @return \object[]
+	 * @return object[]
 	 * @throws \Exception
 	 */
 	public function loadFromDirectory($path)
 	{
 		if ( ! is_dir($path)) {
-			throw new \Exception("Folder `$path` not found.");
+			throw new \Exception("Folder $path not found.");
 		}
 
 		$files = [];
-		foreach (Nette\Utils\Finder::find("*.neon")->from($path) as $file) {
+		foreach (Nette\Utils\Finder::find('*.neon')->from($path) as $file) {
 			$files[] = $file;
 		}
 

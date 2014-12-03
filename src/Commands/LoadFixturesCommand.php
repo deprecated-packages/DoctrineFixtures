@@ -42,8 +42,8 @@ class LoadFixturesCommand extends Command
 	public $loader;
 
 	/**
-	 * @var \Zenify\DoctrineFixtures\Alice\Loader
 	 * @inject
+	 * @var \Zenify\DoctrineFixtures\Alice\Loader
 	 */
 	public $aliceLoader;
 
