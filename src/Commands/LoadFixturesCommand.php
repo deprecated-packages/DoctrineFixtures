@@ -17,11 +17,16 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Zenify\DoctrineFixtures\Alice\AliceLoader;
 use Zenify\DoctrineFixtures\DataFixtures\Loader;
 
 
 class LoadFixturesCommand extends Command
 {
+
+	const APPEND = 'append';
+	const FIXTURES = 'fixtures';
+	const PURGE = 'purge-with-truncate';
 
 	/**
 	 * @inject
@@ -43,7 +48,7 @@ class LoadFixturesCommand extends Command
 
 	/**
 	 * @inject
-	 * @var \Zenify\DoctrineFixtures\Alice\AliceLoader
+	 * @var AliceLoader
 	 */
 	public $aliceLoader;
 
@@ -54,12 +59,12 @@ class LoadFixturesCommand extends Command
 			->setAliases(['doctrine:fixture:load'])
 			->setDescription('Load data fixtures to your database')
 			->setDefinition([
-				new InputArgument('fixtures', InputArgument::REQUIRED | InputArgument::IS_ARRAY,
-					'The directory(/ies) to load data fixtures from.'),
-				new InputOption('append', NULL, InputOption::VALUE_OPTIONAL,
-						'Append the data fixtures instead of deleting all data from the database first.', TRUE),
-				new InputOption('purge-with-truncate', NULL, InputOption::VALUE_NONE,
-						'Purge data by using a database-level TRUNCATE statement')
+				new InputArgument(self::FIXTURES, InputArgument::REQUIRED | InputArgument::IS_ARRAY,
+					'The directory orf file to load data fixtures from.'),
+				new InputOption(self::APPEND, NULL, InputOption::VALUE_OPTIONAL,
+					'Append the data fixtures instead of deleting all data from the database first.', TRUE),
+				new InputOption(self::PURGE, NULL, InputOption::VALUE_NONE,
+					'Purge data by using a database-level TRUNCATE statement')
 			])
 			->setHelp(<<<EOT
 The <info>doctrine:fixtures:load</info> command loads data fixtures from specified directory:
@@ -85,19 +90,49 @@ EOT
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		/** @var QuestionHelper $questionHelper */
-		$questionHelper = $this->getHelper('question');
-		$question = new Question('Careful, database will be purged. Do you want to continue Y/N ?', FALSE);
-
-		if ($input->isInteractive() && ! $input->getOption('append')) {
-			if ( ! $questionHelper->ask($input, $output, $question)) {
+		if ($input->isInteractive() && ! $input->getOption(self::APPEND)) {
+			if ( ! $this->askForPurge($input, $output)) {
 				return;
 			}
 		}
 
-		$dirOrFile = $input->getArgument('fixtures');
+		$dirOrFile = $input->getArgument(self::FIXTURES);
 		$paths = is_array($dirOrFile) ? $dirOrFile : [$dirOrFile];
 
+		$this->loadFixturesWithAlice($paths);
+		$this->loadFixtures($paths, $input->getOption(self::PURGE), $input->getOption(self::APPEND));
+	}
+
+
+	/**
+	 * @return bool
+	 */
+	private function askForPurge(InputInterface $input, OutputInterface $output)
+	{
+		/** @var QuestionHelper $questionHelper */
+		$questionHelper = $this->getHelper('question');
+		$question = new Question('Careful, database will be purged. Do you want to continue Y/N ?', FALSE);
+		return $questionHelper->ask($input, $output, $question);
+	}
+
+
+	private function loadFixturesWithAlice(array $paths)
+	{
+		foreach ($paths as $path) {
+			if (is_dir($path)) {
+				$this->aliceLoader->loadFromDirectory($path);
+			}
+		}
+	}
+
+
+	/**
+	 * @param array $paths
+	 * @param bool $purge
+	 * @param bool $append
+	 */
+	private function loadFixtures(array $paths, $purge, $append)
+	{
 		foreach ($paths as $path) {
 			if (is_dir($path)) {
 				$this->loader->loadFromDirectory($path);
@@ -105,30 +140,13 @@ EOT
 		}
 		$fixtures = $this->loader->getFixtures();
 
-		$aliceFixtures = [];
-		foreach ($paths as $path) {
-			if (is_dir($path)) {
-				$loaded = $this->aliceLoader->loadFromDirectory($path);
-				$aliceFixtures = array_merge($aliceFixtures, $loaded);
-			}
-		}
-
-		if (empty($aliceFixtures) && empty($fixtures)) {
-			throw new InvalidArgumentException(
-				sprintf('Could not find any fixtures to load in: %s', "\n\n- " . implode("\n- ", $paths))
-			);
-		}
-
 		if (empty($fixtures)) {
 			return;
 		}
 
-		$purgeMode = $input->getOption('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
+		$purgeMode = $purge ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
 		$this->purger->setPurgeMode($purgeMode);
-		$this->executor->setLogger(function ($message) use ($output) {
-			$output->writeln(sprintf('  <comment>></comment> <info>%s</info>', $message));
-		});
-		$this->executor->execute($fixtures, $input->getOption('append'));
+		$this->executor->execute($fixtures, $append);
 	}
 
 }
