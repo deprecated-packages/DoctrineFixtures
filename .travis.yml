@@ -12,7 +12,7 @@ matrix:
 before_install:
   - composer self-update
 
-instal:
+install:
   - composer install --no-interaction --prefer-source
 
 before_script:
