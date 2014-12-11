@@ -7,9 +7,17 @@
 
 namespace Zenify\DoctrineFixtures\DI;
 
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\ORMException;
+use Faker\Generator;
 use Kdyby\Console\DI\ConsoleExtension;
+use Nelmio\Alice\ORM\Doctrine;
 use Nette\DI\CompilerExtension;
+use Nette\Neon\Neon;
 use Nette\Utils\Validators;
+use Zenify\DoctrineFixtures\Alice\Loader;
+use Zenify\DoctrineFixtures\Commands\LoadFixturesCommand;
+use Zenify\DoctrineFixtures\Faker\Provider\Strings;
 
 
 class FixturesExtension extends CompilerExtension
@@ -20,15 +28,13 @@ class FixturesExtension extends CompilerExtension
 	 */
 	private $defaults = [
 		'faker' => [
-			'providers' => [
-				'Zenify\DoctrineFixtures\Faker\Provider\Strings'
-			],
+			'providers' => [Strings::class],
 		],
 		'alice' => [
 			'seed' => 1,
 			'locale' => 'cs_CZ',
 			'loaders' => [
-				'neon' => 'Zenify\DoctrineFixtures\Alice\Loader\Neon'
+				'neon' => Neon::class
 			],
 		],
 		'enabled' => FALSE
@@ -57,16 +63,16 @@ class FixturesExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('dataFixtures.purger'))
-			->setClass('Doctrine\Common\DataFixtures\Purger\ORMPurger');
+			->setClass(ORMPurger::class);
 
 		$builder->addDefinition($this->prefix('dataFixtures.executor'))
-			->setClass('Doctrine\Common\DataFixtures\Executor\ORMExecutor');
+			->setClass(ORMException::class);
 
 		$builder->addDefinition($this->prefix('dataFixtures.loader'))
-			->setClass('Zenify\DoctrineFixtures\DataFixtures\Loader');
+			->setClass(Loader::class);
 
 		$builder->addDefinition($this->prefix('command.loadFixtures'))
-			->setClass('Zenify\DoctrineFixtures\Commands\LoadFixturesCommand')
+			->setClass(LoadFixturesCommand::class)
 			->addTag(ConsoleExtension::COMMAND_TAG)
 			->setInject(TRUE);
 
@@ -80,7 +86,7 @@ class FixturesExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('faker.generator'))
-			->setClass('Faker\Generator');
+			->setClass(Generator::class);
 
 		foreach ($config['providers'] as $i => $class) {
 			$builder->addDefinition($this->prefix('faker.provider.' . $i))
@@ -94,10 +100,10 @@ class FixturesExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$builder->addDefinition($this->prefix('alice.loader'))
-			->setClass('Zenify\DoctrineFixtures\Alice\Loader');
+			->setClass(Loader::class);
 
 		$builder->addDefinition($this->prefix('alice.orm.doctrine'))
-			->setClass('Nelmio\Alice\ORM\Doctrine');
+			->setClass(Doctrine::class);
 
 		foreach ($config['loaders'] as $i => $loader) {
 			$builder->addDefinition($this->prefix('alice.loader.' . $i))

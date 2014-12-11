@@ -12,17 +12,15 @@ This package implements all you need for effective dummy data generation:
 - [nelmio/alice](https://github.com/nelmio/alice) manages all that in config. This package adds *.neon* support.
 
 
-
 ## Installation
 
-To get the latest version, run [Composer](http://getcomposer.org/) command:
+Install last version via Composer:
 
 ```sh
 $ composer require zenify/doctrine-fixtures
 ```
 
-
-Register extensions you need in `config.neon`:
+Register extension in `config.neon`:
 
 ```yaml
 extensions:

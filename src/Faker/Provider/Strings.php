@@ -15,12 +15,12 @@ class Strings extends Base
 {
 
 	/**
-	 * @param string $s
+	 * @param string $text
 	 * @return string
 	 */
-	public function webalize($s)
+	public function webalize($text)
 	{
-		return Nette\Utils\Strings::webalize($s);
+		return Nette\Utils\Strings::webalize($text);
 	}
 
 }
