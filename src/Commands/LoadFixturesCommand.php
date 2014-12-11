@@ -41,6 +41,12 @@ class LoadFixturesCommand extends Command
 	 */
 	public $loader;
 
+	/**
+	 * @inject
+	 * @var \Zenify\DoctrineFixtures\Alice\Loader
+	 */
+	public $aliceLoader;
+
 
 	protected function configure()
 	{
@@ -98,10 +104,23 @@ EOT
 			}
 		}
 		$fixtures = $this->loader->getFixtures();
-		if ( ! $fixtures) {
+
+		$aliceFixtures = [];
+		foreach ($paths as $path) {
+			if (is_dir($path)) {
+				$loaded = $this->aliceLoader->loadFromDirectory($path);
+				$aliceFixtures = array_merge($aliceFixtures, $loaded);
+			}
+		}
+
+		if (empty($aliceFixtures) && empty($fixtures)) {
 			throw new InvalidArgumentException(
 				sprintf('Could not find any fixtures to load in: %s', "\n\n- " . implode("\n- ", $paths))
 			);
+		}
+
+		if (empty($fixtures)) {
+			return;
 		}
 
 		$purgeMode = $input->getOption('purge-with-truncate') ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;

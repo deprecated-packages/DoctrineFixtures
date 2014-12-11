@@ -24,6 +24,11 @@ abstract class DatabaseTestCase extends TestCase
 	protected $productDao;
 
 	/**
+	 * @var EntityDao
+	 */
+	protected $userDao;
+
+	/**
 	 * @var Nette\DI\Container
 	 */
 	protected $container;
@@ -34,6 +39,7 @@ abstract class DatabaseTestCase extends TestCase
 		$this->container = $container;
 		$this->em = $container->getByType('Kdyby\Doctrine\EntityManager');
 		$this->productDao = $this->em->getDao('ZenifyTests\DoctrineFixtures\Entities\Product');
+		$this->userDao = $this->em->getDao('ZenifyTests\DoctrineFixtures\Entities\User');
 	}
 
 
@@ -48,6 +54,7 @@ abstract class DatabaseTestCase extends TestCase
 		/** @var Connection $connection */
 		$connection = $this->container->getByType('Doctrine\DBAL\Connection');
 		$connection->query('CREATE TABLE product (id INTEGER NOT NULL, name string, PRIMARY KEY(id))');
+		$connection->query('CREATE TABLE user (id INTEGER NOT NULL, email string, PRIMARY KEY(id))');
 		$this->em->flush();
 	}
 
