@@ -1,20 +1,14 @@
 <?php
 
-/**
- * @testCase
- */
-
 namespace ZenifyTests\DoctrineFixtures;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Kdyby\Doctrine\EntityDao;
 use Nette;
-use Tester\Assert;
 use Zenify;
 use Zenify\DoctrineFixtures\DataFixtures\Loader;
-
-
-$container = require_once __DIR__ . '/../bootstrap.php';
+use ZenifyTests\DatabaseTestCase;
+use ZenifyTests\DoctrineFixtures\Entities\Product;
 
 
 class DoctrineFixturesLoaderTest extends DatabaseTestCase
@@ -29,15 +23,15 @@ class DoctrineFixturesLoaderTest extends DatabaseTestCase
 	protected function setUp()
 	{
 		parent::setUp();
-		$this->fixturesLoader = $this->container->getByType('Zenify\DoctrineFixtures\DataFixtures\Loader');
+		$this->fixturesLoader = $this->container->getByType(Loader::class);
 	}
 
 
 	public function testLoadFixture()
 	{
-		$this->fixturesLoader->loadFromDirectory(__DIR__ . '/fixtures');
+		$this->fixturesLoader->loadFromDirectory(__DIR__ . '/Fixtures');
 		$fixtures = $this->fixturesLoader->getFixtures();
-		Assert::count(1, $fixtures);
+		$this->assertCount(1, $fixtures);
 
 		/** @var ORMExecutor $executor */
 		$executor = $this->container->getByType('Doctrine\Common\DataFixtures\Executor\ORMExecutor');
@@ -46,20 +40,17 @@ class DoctrineFixturesLoaderTest extends DatabaseTestCase
 		/** @var EntityDao $productDao */
 		$productDao = $this->em->getDao('ZenifyTests\DoctrineFixtures\Entities\Product');
 		$product = $productDao->find(1);
-		Assert::type('ZenifyTests\DoctrineFixtures\Entities\Product', $product);
+		$this->assertInstanceOf(Product::class, $product);
 
 		// purge by default
 		$executor->execute($fixtures);
 		$product = $productDao->find(2);
-		Assert::null($product, $product);
+		$this->assertNull($product);
 
 		// append
 		$executor->execute($fixtures, TRUE);
 		$product = $productDao->find(2);
-		Assert::type('ZenifyTests\DoctrineFixtures\Entities\Product', $product);
+		$this->assertInstanceOf(Product::class, $product);
 	}
 
 }
-
-
-(new DoctrineFixturesLoaderTest($container))->run();

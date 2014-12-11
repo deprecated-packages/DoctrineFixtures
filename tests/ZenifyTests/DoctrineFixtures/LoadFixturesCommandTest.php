@@ -6,16 +6,11 @@ use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Tester\Assert;
 use Zenify\DoctrineFixtures\Commands\LoadFixturesCommand;
+use ZenifyTests\DatabaseTestCase;
 
-
-$container = require_once __DIR__ . '/../bootstrap.php';
 
 /**
- * Class LoadFixturesCommandTest
- *
- * @package ZenifyTests\DoctrineFixtures
  * @author Milan Blažek <blazekm1lan@seznam.cz>
  */
 class LoadFixturesCommandTest extends DatabaseTestCase
@@ -26,13 +21,14 @@ class LoadFixturesCommandTest extends DatabaseTestCase
 	 */
 	protected $command;
 
+
 	protected function setUp()
 	{
 		parent::setUp();
 
-		$this->command = $this->container->getByType('Zenify\DoctrineFixtures\Commands\LoadFixturesCommand');
+		$this->command = $this->container->getByType(LoadFixturesCommand::class);
 		$this->command->setHelperSet(new HelperSet([
-			'question' => new QuestionHelper() ,
+			'question' => new QuestionHelper
 		]));
 	}
 
@@ -48,12 +44,10 @@ class LoadFixturesCommandTest extends DatabaseTestCase
 		$this->command->run($input , new BufferedOutput());
 
 		$products = $this->productDao->findAll();
-		Assert::count(100 , $products);
+		$this->assertCount(100 , $products);
 
 		$users = $this->userDao->findAll();
-		Assert::count(10 , $users);
+		$this->assertCount(10 , $users);
 	}
 
 }
-
-(new LoadFixturesCommandTest($container))->run();

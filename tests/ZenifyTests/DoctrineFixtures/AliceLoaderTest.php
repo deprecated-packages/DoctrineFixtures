@@ -1,21 +1,14 @@
 <?php
 
-/**
- * @testCase
- */
-
 namespace ZenifyTests\DoctrineFixtures;
 
 use Nette;
-use Tester\Assert;
 use Zenify;
 use Zenify\DoctrineFixtures\Alice\Loader;
+use ZenifyTests\DatabaseTestCase;
 use ZenifyTests\DoctrineFixtures\Entities\Product;
 use ZenifyTests\DoctrineFixtures\Entities\User;
 use ZenifyTests\DoctrineFixtures\Faker\Providers\ProductName;
-
-
-$container = require_once __DIR__ . '/../bootstrap.php';
 
 
 class AliceLoaderTest extends DatabaseTestCase
@@ -30,7 +23,7 @@ class AliceLoaderTest extends DatabaseTestCase
 	protected function setUp()
 	{
 		parent::setUp();
-		$this->fixturesLoader = $this->container->getByType('Zenify\DoctrineFixtures\Alice\Loader');
+		$this->fixturesLoader = $this->container->getByType(Loader::class);
 	}
 
 
@@ -40,13 +33,13 @@ class AliceLoaderTest extends DatabaseTestCase
 		$this->fixturesLoader->load($file);
 
 		$products = $this->productDao->findAll();
-		Assert::count(100, $products);
+		$this->assertCount(100, $products);
 
 		/** @var Product $product */
 		foreach ($products as $product) {
-			Assert::type('ZenifyTests\DoctrineFixtures\Entities\Product', $product);
-			Assert::isEqual('string', $product->getName());
-			Assert::contains($product->getName(), ProductName::$randomNames);
+			$this->assertInstanceOf(Product::class, $product);
+			$this->assertInternalType('string', $product->getName());
+			$this->assertContains($product->getName(), ProductName::$randomNames);
 		}
 	}
 
@@ -57,20 +50,17 @@ class AliceLoaderTest extends DatabaseTestCase
 		$this->fixturesLoader->loadFromDirectory($dir);
 
 		$products = $this->productDao->findAll();
-		Assert::count(100, $products);
+		$this->assertCount(100, $products);
 
 		$users = $this->userDao->findAll();
-		Assert::count(10, $users);
+		$this->assertCount(10, $users);
 
 		/** @var User $user */
 		foreach ($users as $user) {
-			Assert::type('ZenifyTests\DoctrineFixtures\Entities\User', $user);
-			Assert::contains('@', $user->getEmail());
+			$this->assertInstanceOf(User::class, $user);
+			$this->assertContains('@', $user->getEmail());
 		}
 
 	}
 
 }
-
-
-(new AliceLoaderTest($container))->run();

@@ -7,17 +7,17 @@
 
 namespace Zenify\DoctrineFixtures\DI;
 
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\ORMException;
 use Faker\Generator;
 use Kdyby\Console\DI\ConsoleExtension;
 use Nelmio\Alice\ORM\Doctrine;
 use Nette\DI\CompilerExtension;
-use Nette\Neon\Neon;
 use Nette\Utils\Validators;
-use Zenify\DoctrineFixtures\Alice\Loader;
+use Zenify\DoctrineFixtures\Alice\Loader as AliceLoader;
+use Zenify\DoctrineFixtures\Alice\Loader\Neon;
 use Zenify\DoctrineFixtures\Commands\LoadFixturesCommand;
-use Zenify\DoctrineFixtures\Faker\Provider\Strings;
+use Zenify\DoctrineFixtures\DataFixtures\Loader;
 
 
 class FixturesExtension extends CompilerExtension
@@ -28,7 +28,7 @@ class FixturesExtension extends CompilerExtension
 	 */
 	private $defaults = [
 		'faker' => [
-			'providers' => [Strings::class],
+			'providers' => []
 		],
 		'alice' => [
 			'seed' => 1,
@@ -66,7 +66,7 @@ class FixturesExtension extends CompilerExtension
 			->setClass(ORMPurger::class);
 
 		$builder->addDefinition($this->prefix('dataFixtures.executor'))
-			->setClass(ORMException::class);
+			->setClass(ORMExecutor::class);
 
 		$builder->addDefinition($this->prefix('dataFixtures.loader'))
 			->setClass(Loader::class);
@@ -100,7 +100,7 @@ class FixturesExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$builder->addDefinition($this->prefix('alice.loader'))
-			->setClass(Loader::class);
+			->setClass(AliceLoader::class);
 
 		$builder->addDefinition($this->prefix('alice.orm.doctrine'))
 			->setClass(Doctrine::class);

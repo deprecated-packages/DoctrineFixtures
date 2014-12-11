@@ -22,10 +22,10 @@
 		"nette/safe-stream": "~2.0",
 		"nette/security": "~2.0",
 		"nette/utils": "~2.0",
-		"nette/tester": "~1.2",
 		"tracy/tracy": "~2.0",
 		"zenify/coding-standard": "~3.0",
-		"jakub-onderka/php-parallel-lint": "~0.8"
+		"jakub-onderka/php-parallel-lint": "~0.8",
+		"phpunit/phpunit": "~4.4"
 	},
 	"autoload": {
 		"psr-4": {
