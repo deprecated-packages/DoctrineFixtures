@@ -11,7 +11,7 @@ use Kdyby\Doctrine\EntityManager;
 use Nette;
 
 
-class Loader extends Nette\Object
+class AliceLoader extends Nette\Object
 {
 
 	/**

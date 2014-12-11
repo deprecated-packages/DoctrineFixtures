@@ -4,7 +4,7 @@ namespace ZenifyTests\DoctrineFixtures;
 
 use Nette;
 use Zenify;
-use Zenify\DoctrineFixtures\Alice\Loader;
+use Zenify\DoctrineFixtures\Alice\AliceLoader;
 use ZenifyTests\DatabaseTestCase;
 use ZenifyTests\DoctrineFixtures\Entities\Product;
 use ZenifyTests\DoctrineFixtures\Entities\User;
@@ -15,7 +15,7 @@ class AliceLoaderTest extends DatabaseTestCase
 {
 
 	/**
-	 * @var Loader
+	 * @var AliceLoader
 	 */
 	private $fixturesLoader;
 
@@ -23,7 +23,7 @@ class AliceLoaderTest extends DatabaseTestCase
 	protected function setUp()
 	{
 		parent::setUp();
-		$this->fixturesLoader = $this->container->getByType(Loader::class);
+		$this->fixturesLoader = $this->container->getByType(AliceLoader::class);
 	}
 
 

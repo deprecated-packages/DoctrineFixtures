@@ -41,13 +41,13 @@ class LoadFixturesCommandTest extends DatabaseTestCase
 		]);
 		$input->setInteractive(FALSE);
 
-		$this->command->run($input , new BufferedOutput());
+		$this->command->run($input, new BufferedOutput);
 
 		$products = $this->productDao->findAll();
-		$this->assertCount(100 , $products);
+		$this->assertCount(100, $products);
 
 		$users = $this->userDao->findAll();
-		$this->assertCount(10 , $users);
+		$this->assertCount(10, $users);
 	}
 
 }

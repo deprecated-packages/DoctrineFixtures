@@ -14,7 +14,7 @@ use Kdyby\Console\DI\ConsoleExtension;
 use Nelmio\Alice\ORM\Doctrine;
 use Nette\DI\CompilerExtension;
 use Nette\Utils\Validators;
-use Zenify\DoctrineFixtures\Alice\Loader as AliceLoader;
+use Zenify\DoctrineFixtures\Alice\AliceLoader;
 use Zenify\DoctrineFixtures\Alice\Loader\Neon;
 use Zenify\DoctrineFixtures\Commands\LoadFixturesCommand;
 use Zenify\DoctrineFixtures\DataFixtures\Loader;
