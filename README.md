@@ -95,7 +95,6 @@ $ php www/index.php doctrine:fixtures:load -h
 ```php
 $fixturesLoader = new Zenify\DoctrineFixtures\DataFixtures\Loader;
 $fixturesLoader->loadFromDirectory(__DIR__ . '/fixtures');
-$fixtures = $this->fixturesLoader->getFixtures();
 
-dump($fixtures); // show loaded entities
+$loadedEntities = $this->fixturesLoader->getFixtures(); // get loaded entities
 ```
