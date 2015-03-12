@@ -22,14 +22,80 @@ Via Composer:
 $ composer require zenify/doctrine-fixtures
 ```
 
-Register extension in `config.neon`:
+Register extensions in config.neon (includes [Kdyby/Doctrine](https://github.com/kdyby/doctrine) configuration):
 
 ```yaml
 extensions:
-	- Zenify\DoctrineFixtures\DI\FixturesExtension
+    - Kdyby\Annotations\DI\AnnotationsExtension
+    - Kdyby\Events\DI\EventsExtension
+    - Kdyby\Console\DI\ConsoleExtension
+    doctrine: Kdyby\Doctrine\DI\OrmExtension
+	fixtures: Zenify\DoctrineFixtures\DI\FixturesExtension
+
+doctrine:
+    host: localhost
+    user: root
+    password: 
+    dbname: database
+```
+
+
+## Configuration
+
+```yaml
+# default values
+fixtures:
+	enabled: FALSE # turns on by default in CLI
+	faker:
+		providers: [] # here you can add list of custom providers
+	alice:
+		seed: 1
+		locale: "cs_CZ"
+		loaders:
+			neon: Zenify\DoctrineFixtures\Alice\Loader\Neon
+```
+
+
+### Fixture files 
+
+This extension loads fixtures from `*.neon` files, turns them into entities and inserts them to database.
+
+To understand fixture files, just check [nelmio/alice](https://github.com/nelmio/alice).
+
+Short example: this will create 100 products with generated name:
+
+```yaml
+Zenify\DoctrineFixtures\Tests\Entities\Product:
+	"product{1..100}":
+		__construct: ["<shortName()>"]
 ```
 
 
 ## Usage
 
-See [tests](tests)
+When you have your fixtures files ready, you have 2 options to load them:
+
+### Via CLI
+
+Run in console in your project's root:
+
+```sh
+# show all commands
+$ php www/index.php
+ 
+# run fixture command 
+$ php www/index.php doctrine:fixtures:load 
+
+# get info about fixture command 
+$ php www/index.php doctrine:fixtures:load -h 
+```
+
+### In the code via FixturesLoader 
+
+```php
+$fixturesLoader = new Zenify\DoctrineFixtures\DataFixtures\Loader;
+$fixturesLoader->loadFromDirectory(__DIR__ . '/fixtures');
+$fixtures = $this->fixturesLoader->getFixtures();
+
+dump($fixtures); // show loaded entities
+```
