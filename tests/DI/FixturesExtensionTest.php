@@ -1,17 +1,16 @@
 <?php
 
-namespace ZenifyTests\DoctrineFixtures;
+namespace Zenify\DoctrineFixtures\Tests\DI;
 
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Faker\Generator;
 use Nelmio\Alice\ORM\Doctrine;
-use Nette;
 use Nette\DI\Container;
 use PHPUnit_Framework_TestCase;
-use ZenifyTests\ContainerFactory;
+use Zenify\DoctrineFixtures\Tests\ContainerFactory;
 
 
-class ExtensionTest extends PHPUnit_Framework_TestCase
+class FixturesExtensionTest extends PHPUnit_Framework_TestCase
 {
 
 	/**

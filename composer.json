@@ -7,27 +7,26 @@
 	],
 	"require": {
 		"php": ">=5.5",
-		"kdyby/console": "~2.0",
-		"kdyby/doctrine": "~2.0",
+		"kdyby/console": "~2.3",
+		"kdyby/doctrine": "~2.2",
 		"doctrine/data-fixtures": "~1.0@dev",
 		"fzaninotto/faker": "~1.4",
-		"nelmio/alice": "~1.7"
+		"nelmio/alice": "~1.7",
+		"nette/di": "~2.2",
+		"nette/finder": "~2.2",
+		"tracy/tracy": "~2.2"
 	},
 	"require-dev": {
-		"nette/bootstrap": "~2.0",
-		"nette/di": "~2.0",
-		"nette/http": "~2.0",
-		"nette/mail": "~2.0",
-		"nette/safe-stream": "~2.0",
-		"nette/utils": "~2.0",
-		"tracy/tracy": "~2.0",
-		"zenify/coding-standard": "~3.0",
-		"jakub-onderka/php-parallel-lint": "~0.8",
-		"phpunit/phpunit": "~4.4"
+		"nette/bootstrap": "~2.0"
 	},
 	"autoload": {
 		"psr-4": {
-			"Zenify\\DoctrineFixtures\\": "src/"
+			"Zenify\\DoctrineFixtures\\": "src"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Zenify\\DoctrineFixtures\\Tests\\": "tests"
 		}
 	}
 }

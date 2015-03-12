@@ -1,10 +1,10 @@
 <?php
 
-namespace ZenifyTests\DoctrineFixtures\Fixtures;
+namespace Zenify\DoctrineFixtures\Tests\DataFixtures\Fixtures;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use ZenifyTests\DoctrineFixtures\Entities\Product;
+use Zenify\DoctrineFixtures\Tests\Entities\Product;
 
 
 class ProductFixtures implements FixtureInterface
@@ -15,9 +15,7 @@ class ProductFixtures implements FixtureInterface
 	 */
 	public function load(ObjectManager $manager)
 	{
-		$product = new Product;
-		$product->setName('Bag carrier');
-
+		$product = new Product('Bag carrier');
 		$manager->persist($product);
 		$manager->flush();
 	}

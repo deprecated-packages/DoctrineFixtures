@@ -1,6 +1,6 @@
 <?php
 
-namespace ZenifyTests;
+namespace Zenify\DoctrineFixtures\Tests;
 
 use Doctrine\DBAL\Connection;
 

@@ -1,16 +1,20 @@
 <phpunit
-    bootstrap="tests/ZenifyTests/bootstrap.php"
+    bootstrap="tests/bootstrap.php"
     colors="true"
     convertNoticesToExceptions="true"
     convertWarningsToExceptions="true"
     convertErrorsToExceptions="true"
-    stderr="true"
     syntaxCheck="true"
     verbose="true"
 >
     <testsuites>
-        <testsuite name="DoctrineFixtures tests">
+        <testsuite>
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
 </phpunit>

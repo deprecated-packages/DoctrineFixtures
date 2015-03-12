@@ -1,4 +1,4 @@
-# Zenify/DoctrineFixtures
+# Doctrine Fixtures
 
 [![Build Status](https://img.shields.io/travis/Zenify/DoctrineFixtures.svg?style=flat-square)](https://travis-ci.org/Zenify/DoctrineFixtures)
 [![Quality Score](https://img.shields.io/scrutinizer/g/Zenify/DoctrineFixtures.svg?style=flat-square)](https://scrutinizer-ci.com/g/Zenify/DoctrineFixtures)
@@ -14,9 +14,9 @@ This package implements all you need for effective dummy data generation:
 - [nelmio/alice](https://github.com/nelmio/alice) manages all that in config. This package adds *.neon* support.
 
 
-## Installation
+## Install
 
-Install last version via Composer:
+Via Composer:
 
 ```sh
 $ composer require zenify/doctrine-fixtures
@@ -32,4 +32,4 @@ extensions:
 
 ## Usage
 
-See [tests](tests/ZenifyTests)
+See [tests](tests)

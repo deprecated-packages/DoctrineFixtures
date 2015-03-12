@@ -1,17 +1,16 @@
 <?php
 
-namespace ZenifyTests\DoctrineFixtures;
+namespace Zenify\DoctrineFixtures\Tests\Alice;
 
-use Nette;
-use Zenify;
+use Kdyby\Doctrine\EntityRepository;
 use Zenify\DoctrineFixtures\Alice\AliceLoader;
-use ZenifyTests\DatabaseTestCase;
-use ZenifyTests\DoctrineFixtures\Entities\Product;
-use ZenifyTests\DoctrineFixtures\Entities\User;
-use ZenifyTests\DoctrineFixtures\Faker\Providers\ProductName;
+use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
+use Zenify\DoctrineFixtures\Tests\Entities\Product;
+use Zenify\DoctrineFixtures\Tests\Entities\User;
+use Zenify\DoctrineFixtures\Tests\Faker\Providers\ProductName;
 
 
-class AliceLoaderTest extends DatabaseTestCase
+class AliceLoaderTest extends AbstractDatabaseTestCase
 {
 
 	/**
@@ -19,20 +18,32 @@ class AliceLoaderTest extends DatabaseTestCase
 	 */
 	private $fixturesLoader;
 
+	/**
+	 * @var EntityRepository
+	 */
+	private $productRepository;
+
+	/**
+	 * @var EntityRepository
+	 */
+	private $userRepository;
+
 
 	protected function setUp()
 	{
 		parent::setUp();
 		$this->fixturesLoader = $this->container->getByType(AliceLoader::class);
+		$this->productRepository = $this->entityManager->getRepository(Product::class);
+		$this->userRepository = $this->entityManager->getRepository(User::class);
 	}
 
 
 	public function testLoadFixture()
 	{
-		$file = __DIR__ . '/Alice/products.neon';
+		$file = __DIR__ . '/fixtures/products.neon';
 		$this->fixturesLoader->load($file);
 
-		$products = $this->productDao->findAll();
+		$products = $this->productRepository->findAll();
 		$this->assertCount(100, $products);
 
 		/** @var Product $product */
@@ -46,13 +57,13 @@ class AliceLoaderTest extends DatabaseTestCase
 
 	public function testLoadFolder()
 	{
-		$dir = __DIR__ . '/Alice/';
+		$dir = __DIR__ . '/fixtures';
 		$this->fixturesLoader->loadFromDirectory($dir);
 
-		$products = $this->productDao->findAll();
+		$products = $this->productRepository->findAll();
 		$this->assertCount(100, $products);
 
-		$users = $this->userDao->findAll();
+		$users = $this->userRepository->findAll();
 		$this->assertCount(10, $users);
 
 		/** @var User $user */
@@ -60,7 +71,6 @@ class AliceLoaderTest extends DatabaseTestCase
 			$this->assertInstanceOf(User::class, $user);
 			$this->assertContains('@', $user->getEmail());
 		}
-
 	}
 
 }

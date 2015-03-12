@@ -8,16 +8,16 @@
 namespace Zenify\DoctrineFixtures\Alice;
 
 use Kdyby\Doctrine\EntityManager;
-use Nette;
+use Nette\Utils\Finder;
 
 
-class AliceLoader extends Nette\Object
+class AliceLoader
 {
 
 	/**
 	 * @var EntityManager
 	 */
-	private $em;
+	private $entityManager;
 
 	/**
 	 * @var Loader\Neon
@@ -25,9 +25,9 @@ class AliceLoader extends Nette\Object
 	private $neonLoader;
 
 
-	public function __construct(EntityManager $em, Loader\Neon $neonLoader)
+	public function __construct(EntityManager $entityManager, Loader\Neon $neonLoader)
 	{
-		$this->em = $em;
+		$this->entityManager = $entityManager;
 		$this->neonLoader = $neonLoader;
 	}
 
@@ -50,11 +50,11 @@ class AliceLoader extends Nette\Object
 			}
 			$set = $this->neonLoader->load($file);
 			foreach ($set as $entity) {
-				$this->em->persist($entity);
+				$this->entityManager->persist($entity);
 			}
 			$objects = array_merge($objects, $set);
 		}
-		$this->em->flush();
+		$this->entityManager->flush();
 
 		return $objects;
 	}
@@ -74,7 +74,7 @@ class AliceLoader extends Nette\Object
 		}
 
 		$files = [];
-		foreach (Nette\Utils\Finder::find('*.neon')->from($path) as $file) {
+		foreach (Finder::find('*.neon')->from($path) as $file) {
 			$files[] = $file;
 		}
 

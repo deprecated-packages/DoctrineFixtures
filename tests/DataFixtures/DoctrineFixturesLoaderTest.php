@@ -1,17 +1,15 @@
 <?php
 
-namespace ZenifyTests\DoctrineFixtures;
+namespace Zenify\DoctrineFixtures\Tests\DoctrineFixtures;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Kdyby\Doctrine\EntityDao;
-use Nette;
-use Zenify;
+use Kdyby\Doctrine\EntityRepository;
 use Zenify\DoctrineFixtures\DataFixtures\Loader;
-use ZenifyTests\DatabaseTestCase;
-use ZenifyTests\DoctrineFixtures\Entities\Product;
+use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
+use Zenify\DoctrineFixtures\Tests\Entities\Product;
 
 
-class DoctrineFixturesLoaderTest extends DatabaseTestCase
+class DoctrineFixturesLoaderTest extends AbstractDatabaseTestCase
 {
 
 	/**
@@ -34,11 +32,11 @@ class DoctrineFixturesLoaderTest extends DatabaseTestCase
 		$this->assertCount(1, $fixtures);
 
 		/** @var ORMExecutor $executor */
-		$executor = $this->container->getByType('Doctrine\Common\DataFixtures\Executor\ORMExecutor');
+		$executor = $this->container->getByType(ORMExecutor::class);
 		$executor->execute($fixtures);
 
-		/** @var EntityDao $productDao */
-		$productDao = $this->em->getDao('ZenifyTests\DoctrineFixtures\Entities\Product');
+		/** @var EntityRepository $productDao */
+		$productDao = $this->entityManager->getRepository(Product::class);
 		$product = $productDao->find(1);
 		$this->assertInstanceOf(Product::class, $product);
 
