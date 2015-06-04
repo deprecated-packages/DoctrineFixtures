@@ -73,7 +73,8 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 		}
 	}
 
-	public function testLoadFixtureWithIncludes_fixturesAreLoadedInTopDownOrder()
+
+	public function testLoadFixtureWithIncludesFixturesAreLoadedInTopDownOrder()
 	{
 		$file = __DIR__ . '/fixturesWithIncludes/includes.neon';
 		$this->fixturesLoader->load($file);
@@ -83,8 +84,8 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 		$this->assertCount(2, $users);
 
 		$this->assertInstanceOf(User::class, $users[0]);
-		$this->assertEquals("user1@email.com", $users[0]->getEmail());
+		$this->assertEquals('user1@email.com', $users[0]->getEmail());
 		$this->assertInstanceOf(User::class, $users[1]);
-		$this->assertEquals("user2@email.com", $users[1]->getEmail());
+		$this->assertEquals('user2@email.com', $users[1]->getEmail());
 	}
 }

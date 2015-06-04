@@ -61,7 +61,7 @@ class LoadFixturesCommandTest extends AbstractDatabaseTestCase
 	}
 
 
-	public function testLoadAliceFixturesFromOneFile_noOtherFilesInDirectoryAreProcessed()
+	public function testLoadAliceFixturesFromOneFileNoOtherFilesInDirectoryAreProcessed()
 	{
 		$input = new ArrayInput([
 			'fixtures' => __DIR__ . '/../Alice/fixturesWithIncludes/includes.neon',
