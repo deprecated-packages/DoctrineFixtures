@@ -70,7 +70,7 @@ class Neon extends Base
 			foreach ($data['includes'] as $include) {
 				$includeFile = dirname($file) . DIRECTORY_SEPARATOR . $include;
 				$includeData = $this->parse($includeFile);
-				$data = Helpers::merge($data, $includeData);
+				$data = Helpers::merge($includeData, $data);
 			}
 			unset($data['includes']);
 		}

@@ -60,4 +60,18 @@ class LoadFixturesCommandTest extends AbstractDatabaseTestCase
 		$this->assertCount(10, $this->userRepository->findAll());
 	}
 
+
+	public function testLoadAliceFixturesFromOneFile_noOtherFilesInDirectoryAreProcessed()
+	{
+		$input = new ArrayInput([
+			'fixtures' => __DIR__ . '/../Alice/fixturesWithIncludes/includes.neon',
+			'--append' => FALSE
+		]);
+		$input->setInteractive(FALSE);
+
+		$this->command->run($input, new BufferedOutput);
+
+		$this->assertCount(2, $this->userRepository->findAll());
+	}
+
 }
