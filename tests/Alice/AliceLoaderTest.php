@@ -3,7 +3,7 @@
 namespace Zenify\DoctrineFixtures\Tests\Alice;
 
 use Doctrine\ORM\EntityRepository;
-use Zenify\DoctrineFixtures\Alice\AliceLoader;
+use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
 use Zenify\DoctrineFixtures\Tests\Entities\Product;
 use Zenify\DoctrineFixtures\Tests\Entities\User;
@@ -14,7 +14,7 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 {
 
 	/**
-	 * @var AliceLoader
+	 * @var AliceLoaderInterface
 	 */
 	private $fixturesLoader;
 
@@ -32,7 +32,7 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 	protected function setUp()
 	{
 		parent::setUp();
-		$this->fixturesLoader = $this->container->getByType(AliceLoader::class);
+		$this->fixturesLoader = $this->container->getByType(AliceLoaderInterface::class);
 		$this->productRepository = $this->entityManager->getRepository(Product::class);
 		$this->userRepository = $this->entityManager->getRepository(User::class);
 	}

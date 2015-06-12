@@ -44,14 +44,13 @@ doctrine:
 ```yaml
 # default values
 fixtures:
-	enabled: FALSE # turns on by default in CLI
-	faker:
-		providers: [] # here you can add list of custom providers
 	alice:
 		seed: 1
 		locale: "cs_CZ"
-		loaders:
-			neon: Zenify\DoctrineFixtures\Alice\Loader\Neon
+
+services:
+	- Zenify\DoctrineFixtures\Alice\Loader\Neon
+
 ```
 
 
