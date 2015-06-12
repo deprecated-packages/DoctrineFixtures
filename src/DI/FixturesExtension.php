@@ -24,10 +24,8 @@ class FixturesExtension extends CompilerExtension
 	 * @var array[]
 	 */
 	private $defaults = [
-		'alice' => [
-			'locale' => 'cs_CZ',
-			'seed' => 1
-		]
+		'locale' => 'cs_CZ',
+		'seed' => 1
 	];
 
 
@@ -52,32 +50,13 @@ class FixturesExtension extends CompilerExtension
 	private function loadFakerProvidersToAliceLoader()
 	{
 		$containerBuilder = $this->getContainerBuilder();
-		$config = $this->getValidatedConfig();
+		$config = $this->getConfig($this->defaults);
 
 		$this->getDefinitionByType(Loader::class)->setArguments([
-			$config['alice']['locale'],
+			$config['locale'],
 			$containerBuilder->findByType(Base::class),
-			$config['alice']['seed']
+			$config['seed']
 		]);
-	}
-
-
-	/**
-	 * @return array
-	 */
-	private function getValidatedConfig()
-	{
-		$config = $this->getConfig($this->defaults);
-		$this->validateConfigTypes($config);
-		return $config;
-	}
-
-
-	private function validateConfigTypes(array $config)
-	{
-		Validators::assertField($config, 'alice', 'array');
-		Validators::assertField($config['alice'], 'seed', 'int');
-		Validators::assertField($config['alice'], 'locale', 'string');
 	}
 
 
