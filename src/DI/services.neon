@@ -7,9 +7,10 @@ services:
 	- Zenify\DoctrineFixtures\DataFixtures\Loader
 
 	# Alice
+	- Nelmio\Alice\Fixtures\Loader
 	- Zenify\DoctrineFixtures\Alice\AliceLoader
-	- Zenify\DoctrineFixtures\Alice\Loader\NeonLoader
-	- Nelmio\Alice\ORM\Doctrine
+	- Zenify\DoctrineFixtures\Alice\Fixtures\Parser\Methods\NeonParser
+	- Nelmio\Alice\Persister\Doctrine
 
 	# Faker
 	- Faker\Generator

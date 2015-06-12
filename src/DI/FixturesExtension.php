@@ -8,8 +8,8 @@
 namespace Zenify\DoctrineFixtures\DI;
 
 use Faker\Provider\Base;
-use Nelmio\Alice\LoaderInterface;
-use Nelmio\Alice\ORM\Doctrine;
+use Nelmio\Alice\Fixtures\Loader;
+use Nelmio\Alice\Fixtures\Parser\Methods\MethodInterface;
 use Nette\DI\CompilerExtension;
 use Nette\DI\ServiceDefinition;
 use Nette\Utils\Validators;
@@ -45,7 +45,8 @@ class FixturesExtension extends CompilerExtension
 		$containerBuilder->prepareClassList();
 
 		$this->loadCommandToConsole();
-		$this->loadFakerProvidersToAliceLoaders();
+		$this->loadFakerProvidersToAliceLoader();
+		$this->loadParsersToAliceLoader();
 	}
 
 
@@ -57,19 +58,16 @@ class FixturesExtension extends CompilerExtension
 	}
 
 
-	private function loadFakerProvidersToAliceLoaders()
+	private function loadFakerProvidersToAliceLoader()
 	{
 		$containerBuilder = $this->getContainerBuilder();
-
-		$aliceDoctrineDefinition = $this->getDefinitionByType(Doctrine::class);
-		$fakerProviderDefinitions = $containerBuilder->findByType(Base::class);
 		$config = $this->getValidatedConfig();
 
-		foreach ($containerBuilder->findByType(LoaderInterface::class) as $aliceLoaderDefinition) {
-			$aliceLoaderDefinition->setArguments([$config['alice']['locale'], [], $config['alice']['seed']])
-				->addSetup('setORM', ['@' . $aliceDoctrineDefinition->getClass()])
-				->addSetup('setProviders', [$fakerProviderDefinitions]);
-		}
+		$this->getDefinitionByType(Loader::class)->setArguments([
+			$config['alice']['locale'],
+			$containerBuilder->findByType(Base::class),
+			$config['alice']['seed']
+		]);
 	}
 
 
@@ -89,6 +87,17 @@ class FixturesExtension extends CompilerExtension
 		Validators::assertField($config, 'alice', 'array');
 		Validators::assertField($config['alice'], 'seed', 'int');
 		Validators::assertField($config['alice'], 'locale', 'string');
+	}
+
+
+	private function loadParsersToAliceLoader()
+	{
+		$containerBuilder = $this->getContainerBuilder();
+
+		$aliceLoaderDefinition = $this->getDefinitionByType(Loader::class);
+		foreach ($containerBuilder->findByType(MethodInterface::class) as $parserDefinition) {
+			$aliceLoaderDefinition->addSetup('addParser', ['@' . $parserDefinition->getClass()]);
+		}
 	}
 
 

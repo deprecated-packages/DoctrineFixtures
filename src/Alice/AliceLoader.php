@@ -8,6 +8,7 @@
 namespace Zenify\DoctrineFixtures\Alice;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\Alice\Fixtures\Loader;
 use Nette\Utils\Finder;
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
 use Zenify\DoctrineFixtures\Exception\MissingSourceException;
@@ -22,15 +23,15 @@ class AliceLoader implements AliceLoaderInterface
 	private $entityManager;
 
 	/**
-	 * @var Loader\NeonLoader
+	 * @var Loader
 	 */
-	private $neonLoader;
+	private $aliceLoader;
 
 
-	public function __construct(EntityManagerInterface $entityManager, Loader\NeonLoader $neonLoader)
+	public function __construct(EntityManagerInterface $entityManager, Loader $aliceLoader)
 	{
 		$this->entityManager = $entityManager;
-		$this->neonLoader = $neonLoader;
+		$this->aliceLoader = $aliceLoader;
 	}
 
 
@@ -72,7 +73,8 @@ class AliceLoader implements AliceLoaderInterface
 	 */
 	private function loadFromFile($path)
 	{
-		$entities = $this->neonLoader->load($path);
+		$entities = $this->aliceLoader->load($path);
+
 		foreach ($entities as $entity) {
 			$this->entityManager->persist($entity);
 		}

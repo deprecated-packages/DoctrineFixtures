@@ -5,33 +5,26 @@
  * Copyright (c) 2012 Tomas Votruba (http://tomasvotruba.cz)
  */
 
-namespace Zenify\DoctrineFixtures\Alice\Loader;
+namespace Zenify\DoctrineFixtures\Alice\Fixtures\Parser\Methods;
 
-use Nelmio\Alice\Loader\Base;
-use Nette;
+use Nelmio\Alice\Fixtures\Parser\Methods\Base;
 use Nette\DI\Config\Helpers;
+use Nette\Neon\Neon;
 
 
-class NeonLoader extends Base
+class NeonParser extends Base
 {
 
 	/**
-	 * @param string $file
-	 * @return array
+	 * {@inheritdoc}
 	 */
-	public function load($file)
-	{
-		$data = $this->parse($file);
-		return parent::load($data);
-	}
+	protected $extension = 'neon';
 
 
 	/**
-	 * @param string $file
-	 * @return array
-	 * @throws \UnexpectedValueException
+	 * {@inheritdoc}
 	 */
-	private function parse($file)
+	public function parse($file)
 	{
 		ob_start();
 		$loader = $this;
@@ -46,29 +39,25 @@ class NeonLoader extends Base
 		if ($data === 1) {
 			// include didn't return data but included correctly, parse it as yaml
 			$neon = ob_get_clean();
-			$data = Nette\Neon\Neon::decode($neon);
+			$data = Neon::decode($neon);
 
 		} else {
 			// make sure to clean up if there is a failure
 			ob_end_clean();
 		}
 
-		$data = $this->processIncludes($data, $file);
-
-		return $data;
+		return $this->processIncludes($data, $file);
 	}
 
 
 	/**
-	 * @param array $data
-	 * @param string $file
-	 * @return array
+	 * {@inheritdoc}
 	 */
-	private function processIncludes($data, $file)
+	protected function processIncludes($data, $filename)
 	{
 		if (isset($data['includes'])) {
 			foreach ($data['includes'] as $include) {
-				$includeFile = dirname($file) . DIRECTORY_SEPARATOR . $include;
+				$includeFile = dirname($filename) . DIRECTORY_SEPARATOR . $include;
 				$includeData = $this->parse($includeFile);
 				$data = Helpers::merge($includeData, $data);
 			}
