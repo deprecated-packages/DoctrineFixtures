@@ -46,6 +46,7 @@ class LoadFixturesCommand extends Command
 
 	public function __construct(ORMExecutor $ormExecutor, Loader $loader, AliceLoader $aliceLoader)
 	{
+		parent::__construct();
 		$this->ormExecutor = $ormExecutor;
 		$this->loader = $loader;
 		$this->aliceLoader = $aliceLoader;
