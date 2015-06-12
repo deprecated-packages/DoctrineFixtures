@@ -58,6 +58,31 @@ Zenify\DoctrineFixtures\Tests\Entity\Product:
 		__construct: ["<shortName()>"]
 ```
 
+You can also include others fixures:
+
+`products.neon`
+
+```yaml
+includes:
+	- categories.neon
+
+Zenify\DoctrineFixtures\Tests\Entity\Product:
+	"product{1..100}":
+		__construct: ["<shortName()>"]
+		category: "@category@brand<numberBetween(1, 10)>"
+```
+
+`categories.neon`
+
+```yaml
+Zenify\DoctrineFixtures\Tests\Entity\Category:
+	"category{1..10}":
+		__construct: ["<shortName()>"]
+```
+
+Note: the keyword is `include` for `yaml` files.
+
+
 And then we can load them:
 
 ```php
