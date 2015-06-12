@@ -5,7 +5,7 @@
  * Copyright (c) 2012 Tomas Votruba (http://tomasvotruba.cz)
  */
 
-namespace Zenify\DoctrineFixtures\Commands;
+namespace Zenify\DoctrineFixtures\Command;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;

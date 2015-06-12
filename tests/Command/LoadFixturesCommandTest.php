@@ -1,13 +1,13 @@
 <?php
 
-namespace Zenify\DoctrineFixtures\Tests\Commands;
+namespace Zenify\DoctrineFixtures\Tests\Command;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Zenify\DoctrineFixtures\Commands\LoadFixturesCommand;
+use Zenify\DoctrineFixtures\Command\LoadFixturesCommand;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
 use Zenify\DoctrineFixtures\Tests\Entities\Product;
 use Zenify\DoctrineFixtures\Tests\Entities\User;

@@ -1,0 +1,15 @@
+services:
+	- Zenify\DoctrineFixtures\Command\LoadFixturesCommand
+
+	# DataFixtures
+	- Doctrine\Common\DataFixtures\Executor\ORMExecutor
+	- Doctrine\Common\DataFixtures\Purger\ORMPurger
+	- Zenify\DoctrineFixtures\DataFixtures\Loader
+
+	# Alice
+	- Zenify\DoctrineFixtures\Alice\AliceLoader
+	- Zenify\DoctrineFixtures\Alice\Loader\Neon
+	- Nelmio\Alice\ORM\Doctrine
+
+	# Faker
+	- Faker\Generator
