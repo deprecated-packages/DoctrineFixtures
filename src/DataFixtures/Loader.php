@@ -10,9 +10,10 @@ namespace Zenify\DoctrineFixtures\DataFixtures;
 use Doctrine;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Nette\DI\Container;
+use Zenify\DoctrineFixtures\Contract\DataFixtures\DataFixturesLoaderInterface;
 
 
-class Loader extends Doctrine\Common\DataFixtures\Loader
+class Loader extends Doctrine\Common\DataFixtures\Loader implements DataFixturesLoaderInterface
 {
 
 	/**
@@ -27,6 +28,9 @@ class Loader extends Doctrine\Common\DataFixtures\Loader
 	}
 
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function addFixture(FixtureInterface $fixture)
 	{
 		$this->container->callInjects($fixture);
