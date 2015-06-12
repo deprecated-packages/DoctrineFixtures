@@ -7,9 +7,9 @@
 
 namespace Zenify\DoctrineFixtures\DataFixtures;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\Loader;
 use Zenify\DoctrineFixtures\Contract\DataFixtures\DataFixturesLoaderInterface;
+use Zenify\DoctrineFixtures\Exception\MissingSourceException;
 
 
 class DataFixturesLoader implements DataFixturesLoaderInterface
@@ -30,54 +30,40 @@ class DataFixturesLoader implements DataFixturesLoaderInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function addFixture(FixtureInterface $fixture)
+	public function load($sources)
 	{
-		$this->doctrineLoader->addFixture($fixture);
-	}
+		if ( ! is_array($sources)) {
+			$sources = [$sources];
+		}
 
+		$entities = [];
+		foreach ($sources as $source) {
+			$newEntities = $this->loadEntitiesFromSource($source);
+			$entities = array_merge($entities, $newEntities);
+		}
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function loadFromDirectory($dir)
-	{
-		return $this->doctrineLoader->loadFromDirectory($dir);
-	}
-
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function loadFromFile($fileName)
-	{
-		return $this->doctrineLoader->loadFromFile($fileName);
-	}
-
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function hasFixture($fixture)
-	{
-		return $this->doctrineLoader->hasFixture($fixture);
-	}
-
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getFixtures()
-	{
 		return $this->doctrineLoader->getFixtures();
 	}
 
 
 	/**
-	 * {@inheritdoc}
+	 * @param string $source
+	 * @return object[]
+	 * @throws MissingSourceException
 	 */
-	public function isTransient($className)
+	private function loadEntitiesFromSource($source)
 	{
-		return $this->doctrineLoader->isTransient($className);
+		if (is_dir($source)) {
+			return $this->doctrineLoader->loadFromDirectory($source);
+
+		} elseif (is_file($source)) {
+			return $this->doctrineLoader->loadFromFile($source);
+
+		} else {
+			throw new MissingSourceException(
+				sprintf('Source "%s" was not found.', $source)
+			);
+		}
 	}
 
 }

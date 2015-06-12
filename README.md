@@ -71,7 +71,44 @@ Zenify\DoctrineFixtures\Tests\Entity\Product:
 
 When you have your fixtures files ready, you have 2 options to load them:
 
-### Via CLI
+
+### Via [Alice](https://github.com/nelmio/alice)
+
+
+```php
+use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
+
+
+class SomeClass
+{
+
+	/**
+	 * @var AliceLoaderInterface
+	 */
+	private $aliceLoader;
+
+
+	public function __construct(AliceLoaderInterface $aliceLoader)
+	{
+		$this->aliceLoader = $aliceLoader;
+	}
+	
+	
+	public function loadFixtures()
+	{
+		$entities = $this->aliceLoader->load(__DIR__ . '/fixtures');
+		// ...
+	}
+
+}
+```
+
+
+
+
+### Via original DoctrineFixtures
+
+#### In CLI
 
 Run in console in your project's root:
 
@@ -86,11 +123,32 @@ $ php www/index.php doctrine:fixtures:load
 $ php www/index.php doctrine:fixtures:load -h 
 ```
 
-### In the code via FixturesLoader 
+#### In the code 
 
 ```php
-$fixturesLoader = new Zenify\DoctrineFixtures\DataFixtures\Loader;
-$fixturesLoader->loadFromDirectory(__DIR__ . '/fixtures');
+use Zenify\DoctrineFixtures\Contract\DataFixtures\DataFixturesLoaderInterface;
 
-$loadedEntities = $this->fixturesLoader->getFixtures(); // get loaded entities
+
+class SomeClass
+{
+
+	/**
+	 * @var DataFixturesLoaderInterface
+	 */
+	private $dataFixturesLoader;
+
+
+	public function __construct(DataFixturesLoaderInterface $dataFixturesLoader)
+	{
+		$this->dataFixturesLoader = $dataFixturesLoader;
+	}
+	
+	
+	public function loadFixtures()
+	{
+		$entities = $this->fixturesLoader->load(__DIR__ . '/fixtures');
+		// ...
+	}
+
+}
 ```

@@ -127,23 +127,14 @@ EOT
 	 */
 	private function loadFixtures(array $paths, $purge, $append)
 	{
-		foreach ($paths as $path) {
-			if (is_dir($path)) {
-				$this->loader->loadFromDirectory($path);
-
-			} elseif (is_file($path)) {
-				$this->loader->loadFromFile($path);
-			}
-		}
-		$fixtures = $this->loader->getFixtures();
-
-		if (empty($fixtures)) {
+		$entities = $this->loader->load($paths);
+		if (empty($entities)) {
 			return;
 		}
 
 		$purgeMode = $purge ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
 		$this->ormPurger->setPurgeMode($purgeMode);
-		$this->ormExecutor->execute($fixtures, $append);
+		$this->ormExecutor->execute($entities, $append);
 	}
 
 }

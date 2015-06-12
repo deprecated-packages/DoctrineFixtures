@@ -39,8 +39,7 @@ class DoctrineFixturesLoaderTest extends AbstractDatabaseTestCase
 
 	public function testLoadFixture()
 	{
-		$this->fixturesLoader->loadFromDirectory(__DIR__ . '/Fixtures');
-		$fixtures = $this->fixturesLoader->getFixtures();
+		$fixtures = $this->fixturesLoader->load(__DIR__ . '/Fixtures');
 		$this->assertCount(1, $fixtures);
 
 		$this->ormExecutor->execute($fixtures);

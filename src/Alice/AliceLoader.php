@@ -18,20 +18,20 @@ class AliceLoader implements AliceLoaderInterface
 {
 
 	/**
-	 * @var EntityManagerInterface
-	 */
-	private $entityManager;
-
-	/**
 	 * @var Loader
 	 */
 	private $aliceLoader;
 
+	/**
+	 * @var EntityManagerInterface
+	 */
+	private $entityManager;
 
-	public function __construct(EntityManagerInterface $entityManager, Loader $aliceLoader)
+
+	public function __construct(Loader $aliceLoader, EntityManagerInterface $entityManager)
 	{
-		$this->entityManager = $entityManager;
 		$this->aliceLoader = $aliceLoader;
+		$this->entityManager = $entityManager;
 	}
 
 
