@@ -9,6 +9,7 @@ namespace Zenify\DoctrineFixtures\Command;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\Common\DataFixtures\Purger\PurgerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,8 +17,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
-use Zenify\DoctrineFixtures\Alice\AliceLoader;
-use Zenify\DoctrineFixtures\DataFixtures\Loader;
+use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
+use Zenify\DoctrineFixtures\Contract\DataFixtures\DataFixturesLoaderInterface;
 
 
 class LoadFixturesCommand extends Command
@@ -34,18 +35,21 @@ class LoadFixturesCommand extends Command
 	private $ormExecutor;
 
 	/**
-	 * @var Loader
+	 * @var DataFixturesLoaderInterface
 	 */
 	private $loader;
 
 	/**
-	 * @var AliceLoader
+	 * @var AliceLoaderInterface
 	 */
 	private $aliceLoader;
 
 
-	public function __construct(ORMExecutor $ormExecutor, Loader $loader, AliceLoader $aliceLoader)
-	{
+	public function __construct(
+		PurgerInterface $ormExecutor,
+		DataFixturesLoaderInterface $loader,
+		AliceLoaderInterface $aliceLoader
+	) {
 		parent::__construct();
 		$this->ormExecutor = $ormExecutor;
 		$this->loader = $loader;
@@ -99,7 +103,7 @@ EOT
 		$dirOrFile = $input->getArgument('fixtures');
 		$paths = is_array($dirOrFile) ? $dirOrFile : [$dirOrFile];
 
-		$this->loadFixturesWithAlice($paths);
+		$this->aliceLoader->load($paths);
 		$this->loadFixtures($paths, $input->getOption('purge-with-truncate'), $input->getOption('append'));
 	}
 
@@ -113,19 +117,6 @@ EOT
 		$questionHelper = $this->getHelper('question');
 		$question = new Question('Careful, database will be purged. Do you want to continue Y/N ?', FALSE);
 		return $questionHelper->ask($input, $output, $question);
-	}
-
-
-	private function loadFixturesWithAlice(array $paths)
-	{
-		foreach ($paths as $path) {
-			if (is_dir($path)) {
-				$this->aliceLoader->loadFromDirectory($path);
-
-			} elseif (is_file($path)) {
-				$this->aliceLoader->load($path);
-			}
-		}
 	}
 
 

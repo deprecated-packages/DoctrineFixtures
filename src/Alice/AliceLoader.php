@@ -10,8 +10,7 @@ namespace Zenify\DoctrineFixtures\Alice;
 use Doctrine\ORM\EntityManagerInterface;
 use Nette\Utils\Finder;
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
-use Zenify\DoctrineFixtures\Exception\MissingDirException;
-use Zenify\DoctrineFixtures\Exception\MissingFileException;
+use Zenify\DoctrineFixtures\Exception\MissingSourceException;
 
 
 class AliceLoader implements AliceLoaderInterface
@@ -23,12 +22,12 @@ class AliceLoader implements AliceLoaderInterface
 	private $entityManager;
 
 	/**
-	 * @var Loader\Neon
+	 * @var Loader\NeonLoader
 	 */
 	private $neonLoader;
 
 
-	public function __construct(EntityManagerInterface $entityManager, Loader\Neon $neonLoader)
+	public function __construct(EntityManagerInterface $entityManager, Loader\NeonLoader $neonLoader)
 	{
 		$this->entityManager = $entityManager;
 		$this->neonLoader = $neonLoader;
@@ -38,69 +37,59 @@ class AliceLoader implements AliceLoaderInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function load($files)
+	public function load($sources)
 	{
-		if ( ! is_array($files)) {
-			$files = [$files];
+		if ( ! is_array($sources)) {
+			$sources = [$sources];
 		}
 
-		$objects = [];
-		foreach ($files as $file) {
-			$this->ensureFileExists($file);
+		$entities = [];
+		foreach ($sources as $source) {
+			if (is_file($source)) {
+				$newEntities = $this->loadFromFile($source);
 
-			$set = $this->neonLoader->load($file);
-			foreach ($set as $entity) {
-				$this->entityManager->persist($entity);
+			} elseif (is_dir($source)) {
+				$newEntities = $this->loadFromDirectory($source);
+
+			} else {
+				throw new MissingSourceException(
+					sprintf('Source "%s" was not found.', $source)
+				);
 			}
-			$objects = array_merge($objects, $set);
+
+			$entities = array_merge($entities, $newEntities);
 		}
+
 		$this->entityManager->flush();
 
-		return $objects;
+		return $entities;
+	}
+
+
+	/**
+	 * @param string $path
+	 * @return object[]
+	 */
+	private function loadFromFile($path)
+	{
+		$entities = $this->neonLoader->load($path);
+		foreach ($entities as $entity) {
+			$this->entityManager->persist($entity);
+		}
+		return $entities;
 	}
 
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function loadFromDirectory($path)
+	private function loadFromDirectory($path)
 	{
-		$this->ensureDirExists($path);
-
 		$files = [];
 		foreach (Finder::find('*.neon')->from($path) as $file) {
 			$files[] = $file;
 		}
-
 		return $this->load($files);
-	}
-
-
-	/**
-	 * @param string $path
-	 * @throws MissingDirException
-	 */
-	private function ensureDirExists($path)
-	{
-		if ( ! is_dir($path)) {
-			throw new MissingDirException(
-				sprintf('Directory "%s" was not found.', $path)
-			);
-		}
-	}
-
-
-	/**
-	 * @param string $file
-	 * @throws MissingFileException
-	 */
-	private function ensureFileExists($file)
-	{
-		if ( ! file_exists($file)) {
-			throw new MissingFileException(
-				sprintf('File "%s" was not found', $file)
-			);
-		}
 	}
 
 }

@@ -7,28 +7,16 @@
 
 namespace Zenify\DoctrineFixtures\Contract\Alice;
 
-use Exception;
-
 
 interface AliceLoaderInterface
 {
 
 	/**
-	 * Loads fixtures from one or more files
+	 * Loads fixtures from one or more files/folders.
 	 *
-	 * @param string|array $files
+	 * @param string|array $sources
 	 * @return object[]
 	 */
-	function load($files);
-
-
-	/**
-	 * Load all neon fixtures files from folder
-	 *
-	 * @param string $path
-	 * @return object[]
-	 * @throws Exception
-	 */
-	function loadFromDirectory($path);
+	function load($sources);
 
 }

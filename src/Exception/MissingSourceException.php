@@ -10,7 +10,7 @@ namespace Zenify\DoctrineFixtures\Exception;
 use Exception;
 
 
-class MissingDirException extends Exception
+class MissingSourceException extends Exception
 {
 
 }

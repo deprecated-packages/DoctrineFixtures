@@ -8,7 +8,7 @@ services:
 
 	# Alice
 	- Zenify\DoctrineFixtures\Alice\AliceLoader
-	- Zenify\DoctrineFixtures\Alice\Loader\Neon
+	- Zenify\DoctrineFixtures\Alice\Loader\NeonLoader
 	- Nelmio\Alice\ORM\Doctrine
 
 	# Faker
