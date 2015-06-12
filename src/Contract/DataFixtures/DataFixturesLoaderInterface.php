@@ -22,7 +22,7 @@ interface DataFixturesLoaderInterface
 	 * @param string $dir Directory to find fixture classes in.
 	 * @return array $fixtures Array of loaded fixture object instances.
 	 */
-	public function loadFromDirectory($dir);
+	function loadFromDirectory($dir);
 
 
 	/**
@@ -31,7 +31,7 @@ interface DataFixturesLoaderInterface
 	 * @param string $fileName File to find fixture classes in.
 	 * @return array $fixtures Array of loaded fixture object instances.
 	 */
-	public function loadFromFile($fileName);
+	function loadFromFile($fileName);
 
 
 	/**
@@ -40,7 +40,7 @@ interface DataFixturesLoaderInterface
 	 * @param FixtureInterface $fixture
 	 * @return bool
 	 */
-	public function hasFixture($fixture);
+	function hasFixture($fixture);
 
 
 	/**
@@ -48,7 +48,7 @@ interface DataFixturesLoaderInterface
 	 *
 	 * @param FixtureInterface $fixture
 	 */
-	public function addFixture(FixtureInterface $fixture);
+	function addFixture(FixtureInterface $fixture);
 
 
 	/**
@@ -56,7 +56,7 @@ interface DataFixturesLoaderInterface
 	 *
 	 * @return array $fixtures
 	 */
-	public function getFixtures();
+	function getFixtures();
 
 
 	/**
@@ -66,6 +66,6 @@ interface DataFixturesLoaderInterface
 	 * @param string $className
 	 * @return bool
 	 */
-	public function isTransient($className);
+	function isTransient($className);
 
 }

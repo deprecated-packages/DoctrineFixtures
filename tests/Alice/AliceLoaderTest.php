@@ -88,4 +88,5 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 		$this->assertInstanceOf(User::class, $users[1]);
 		$this->assertEquals('user2@email.com', $users[1]->getEmail());
 	}
+
 }
