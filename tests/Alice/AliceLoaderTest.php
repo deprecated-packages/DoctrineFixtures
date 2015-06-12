@@ -62,7 +62,7 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 		$this->fixturesLoader->load($dir);
 
 		$products = $this->productRepository->findAll();
-		$this->assertCount(100, $products);
+		$this->assertCount(120, $products);
 
 		$users = $this->userRepository->findAll();
 		$this->assertCount(10, $users);

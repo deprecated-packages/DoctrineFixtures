@@ -63,11 +63,11 @@ class AliceLoader implements AliceLoaderInterface
 	 */
 	private function loadEntitiesFromSource($source)
 	{
-		if (is_file($source)) {
-			return $this->loadFromFile($source);
-
-		} elseif (is_dir($source)) {
+		if (is_dir($source)) {
 			return $this->loadFromDirectory($source);
+
+		} elseif (is_file($source)) {
+			return $this->loadFromFile($source);
 
 		} else {
 			throw new MissingSourceException(

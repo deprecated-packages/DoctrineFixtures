@@ -56,7 +56,7 @@ class LoadFixturesCommandTest extends AbstractDatabaseTestCase
 
 		$this->command->run($input, new BufferedOutput);
 
-		$this->assertCount(100, $this->productRepository->findAll());
+		$this->assertCount(120, $this->productRepository->findAll());
 		$this->assertCount(10, $this->userRepository->findAll());
 	}
 
