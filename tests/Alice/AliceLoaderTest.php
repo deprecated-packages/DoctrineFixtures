@@ -79,6 +79,7 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 		$file = __DIR__ . '/fixturesWithIncludes/includes.neon';
 		$this->fixturesLoader->load($file);
 
+		/** @var User[] $users */
 		$users = $this->userRepository->findAll();
 
 		$this->assertCount(2, $users);
