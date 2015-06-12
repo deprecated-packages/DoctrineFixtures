@@ -23,33 +23,33 @@ use Zenify\DoctrineFixtures\DataFixtures\Loader;
 class LoadFixturesCommand extends Command
 {
 
-	const APPEND = 'append';
-	const FIXTURES = 'fixtures';
-	const PURGE = 'purge-with-truncate';
-
 	/**
-	 * @inject
 	 * @var ORMPurger
 	 */
-	public $purger;
+	private $ormPurger;
 
 	/**
-	 * @inject
 	 * @var ORMExecutor
 	 */
-	public $executor;
+	private $ormExecutor;
 
 	/**
-	 * @inject
 	 * @var Loader
 	 */
-	public $loader;
+	private $loader;
 
 	/**
-	 * @inject
 	 * @var AliceLoader
 	 */
-	public $aliceLoader;
+	private $aliceLoader;
+
+
+	public function __construct(ORMExecutor $ormExecutor, Loader $loader, AliceLoader $aliceLoader)
+	{
+		$this->ormExecutor = $ormExecutor;
+		$this->loader = $loader;
+		$this->aliceLoader = $aliceLoader;
+	}
 
 
 	protected function configure()
@@ -58,11 +58,11 @@ class LoadFixturesCommand extends Command
 			->setAliases(['doctrine:fixture:load'])
 			->setDescription('Load data fixtures to your database')
 			->setDefinition([
-				new InputArgument(self::FIXTURES, InputArgument::REQUIRED | InputArgument::IS_ARRAY,
+				new InputArgument('fixtures', InputArgument::REQUIRED | InputArgument::IS_ARRAY,
 					'The directory orf file to load data fixtures from.'),
-				new InputOption(self::APPEND, NULL, InputOption::VALUE_OPTIONAL,
+				new InputOption('append', NULL, InputOption::VALUE_OPTIONAL,
 					'Append the data fixtures instead of deleting all data from the database first.', TRUE),
-				new InputOption(self::PURGE, NULL, InputOption::VALUE_NONE,
+				new InputOption('purge-with-truncate', NULL, InputOption::VALUE_NONE,
 					'Purge data by using a database-level TRUNCATE statement')
 			])
 			->setHelp(<<<EOT
@@ -89,17 +89,17 @@ EOT
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		if ($input->isInteractive() && ! $input->getOption(self::APPEND)) {
+		if ($input->isInteractive() && ! $input->getOption('append')) {
 			if ( ! $this->askForPurge($input, $output)) {
 				return;
 			}
 		}
 
-		$dirOrFile = $input->getArgument(self::FIXTURES);
+		$dirOrFile = $input->getArgument('fixtures');
 		$paths = is_array($dirOrFile) ? $dirOrFile : [$dirOrFile];
 
 		$this->loadFixturesWithAlice($paths);
-		$this->loadFixtures($paths, $input->getOption(self::PURGE), $input->getOption(self::APPEND));
+		$this->loadFixtures($paths, $input->getOption('purge-with-truncate'), $input->getOption('append'));
 	}
 
 
@@ -150,8 +150,8 @@ EOT
 		}
 
 		$purgeMode = $purge ? ORMPurger::PURGE_MODE_TRUNCATE : ORMPurger::PURGE_MODE_DELETE;
-		$this->purger->setPurgeMode($purgeMode);
-		$this->executor->execute($fixtures, $append);
+		$this->ormPurger->setPurgeMode($purgeMode);
+		$this->ormExecutor->execute($fixtures, $append);
 	}
 
 }
