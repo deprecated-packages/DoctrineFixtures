@@ -2,7 +2,7 @@
 
 namespace Zenify\DoctrineFixtures\Tests;
 
-use Kdyby\Doctrine\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Nette\DI\Container;
 use PHPUnit_Framework_TestCase;
 
@@ -16,7 +16,7 @@ abstract class AbstractDatabaseTestCase extends PHPUnit_Framework_TestCase
 	protected $container;
 
 	/**
-	 * @var EntityManager
+	 * @var EntityManagerInterface
 	 */
 	protected $entityManager;
 
@@ -29,7 +29,7 @@ abstract class AbstractDatabaseTestCase extends PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
-		$this->entityManager = $this->container->getByType(EntityManager::class);
+		$this->entityManager = $this->container->getByType(EntityManagerInterface::class);
 
 		/** @var DatabaseLoader $databaseLoader */
 		$databaseLoader = $this->container->getByType(DatabaseLoader::class);

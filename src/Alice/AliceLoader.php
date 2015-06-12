@@ -7,7 +7,7 @@
 
 namespace Zenify\DoctrineFixtures\Alice;
 
-use Kdyby\Doctrine\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Nette\Utils\Finder;
 
 
@@ -15,7 +15,7 @@ class AliceLoader
 {
 
 	/**
-	 * @var EntityManager
+	 * @var EntityManagerInterface
 	 */
 	private $entityManager;
 
@@ -25,7 +25,7 @@ class AliceLoader
 	private $neonLoader;
 
 
-	public function __construct(EntityManager $entityManager, Loader\Neon $neonLoader)
+	public function __construct(EntityManagerInterface $entityManager, Loader\Neon $neonLoader)
 	{
 		$this->entityManager = $entityManager;
 		$this->neonLoader = $neonLoader;

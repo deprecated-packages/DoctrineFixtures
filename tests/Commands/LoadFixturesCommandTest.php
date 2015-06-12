@@ -2,7 +2,7 @@
 
 namespace Zenify\DoctrineFixtures\Tests\Commands;
 
-use Kdyby\Doctrine\EntityRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\ArrayInput;

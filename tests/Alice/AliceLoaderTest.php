@@ -2,7 +2,7 @@
 
 namespace Zenify\DoctrineFixtures\Tests\Alice;
 
-use Kdyby\Doctrine\EntityRepository;
+use Doctrine\ORM\EntityRepository;
 use Zenify\DoctrineFixtures\Alice\AliceLoader;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
 use Zenify\DoctrineFixtures\Tests\Entities\Product;

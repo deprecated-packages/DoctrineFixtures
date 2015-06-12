@@ -3,7 +3,7 @@
 namespace Zenify\DoctrineFixtures\Tests\DoctrineFixtures;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Kdyby\Doctrine\EntityRepository;
+use Doctrine\ORM\EntityRepository;
 use Zenify\DoctrineFixtures\DataFixtures\Loader;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
 use Zenify\DoctrineFixtures\Tests\Entities\Product;
@@ -17,11 +17,23 @@ class DoctrineFixturesLoaderTest extends AbstractDatabaseTestCase
 	 */
 	private $fixturesLoader;
 
+	/**
+	 * @var EntityRepository
+	 */
+	private $productRepository;
+
+	/**
+	 * @var ORMExecutor
+	 */
+	private $ormExecutor;
+
 
 	protected function setUp()
 	{
 		parent::setUp();
 		$this->fixturesLoader = $this->container->getByType(Loader::class);
+		$this->productRepository = $this->entityManager->getRepository(Product::class);
+		$this->ormExecutor = $this->container->getByType(ORMExecutor::class);
 	}
 
 
@@ -31,23 +43,19 @@ class DoctrineFixturesLoaderTest extends AbstractDatabaseTestCase
 		$fixtures = $this->fixturesLoader->getFixtures();
 		$this->assertCount(1, $fixtures);
 
-		/** @var ORMExecutor $executor */
-		$executor = $this->container->getByType(ORMExecutor::class);
-		$executor->execute($fixtures);
+		$this->ormExecutor->execute($fixtures);
 
-		/** @var EntityRepository $productDao */
-		$productDao = $this->entityManager->getRepository(Product::class);
-		$product = $productDao->find(1);
+		$product = $this->productRepository->find(1);
 		$this->assertInstanceOf(Product::class, $product);
 
 		// purge by default
-		$executor->execute($fixtures);
-		$product = $productDao->find(2);
+		$this->ormExecutor->execute($fixtures);
+		$product = $this->productRepository->find(2);
 		$this->assertNull($product);
 
 		// append
-		$executor->execute($fixtures, TRUE);
-		$product = $productDao->find(2);
+		$this->ormExecutor->execute($fixtures, TRUE);
+		$product = $this->productRepository->find(2);
 		$this->assertInstanceOf(Product::class, $product);
 	}
 
