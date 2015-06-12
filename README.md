@@ -22,13 +22,12 @@ Via Composer:
 $ composer require zenify/doctrine-fixtures
 ```
 
-Register extensions in config.neon (includes [Kdyby/Doctrine](https://github.com/kdyby/doctrine) configuration):
+Register extensions in `config.neon`:
 
 ```yaml
 extensions:
     - Kdyby\Annotations\DI\AnnotationsExtension
     - Kdyby\Events\DI\EventsExtension
-    - Kdyby\Console\DI\ConsoleExtension
     doctrine: Kdyby\Doctrine\DI\OrmExtension
 	fixtures: Zenify\DoctrineFixtures\DI\FixturesExtension
 
