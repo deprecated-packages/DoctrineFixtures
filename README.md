@@ -7,10 +7,10 @@
 [![Latest stable](https://img.shields.io/packagist/v/zenify/doctrine-fixtures.svg?style=flat-square)](https://packagist.org/packages/zenify/doctrine-fixtures)
 
 
-This package implements all you need for effective dummy data generation:
+Integration of [nelmio/alice](https://github.com/nelmio/alice) to Nette DI.
+This package adds `.neon` support to Alice.
 
-- [nelmio/alice](https://github.com/nelmio/alice) manages all that in config. This package adds *.neon* support.
-- [fzaninotto/Faker](https://github.com/fzaninotto/Faker) generates fake data.
+Alice uses [fzaninotto/Faker](https://github.com/fzaninotto/Faker) to generate fake data, so be sure to check that too.
 
 
 ## Install
@@ -37,9 +37,8 @@ extensions:
 ```yaml
 # default values
 fixtures:
-	alice:
-		locale: "cs_CZ" # e.g. change to en_US in case you want to use English
-		seed: 1
+	locale: "cs_CZ" # e.g. change to en_US in case you want to use English
+	seed: 1
 ```
 
 For all supported locales, just check [Faker Providers](https://github.com/fzaninotto/Faker/tree/master/src/Faker/Provider).
@@ -47,14 +46,9 @@ For all supported locales, just check [Faker Providers](https://github.com/fzani
 
 ## Usage
 
+We can load `.neon`/`.yaml` with specific fixtures structure. Alice turns them into entities and inserts them to database. To understand fixture files, just check the [README of nelmio/alice](https://github.com/nelmio/alice).
 
-### Via [Alice](https://github.com/nelmio/alice)
-
-First is based on loading `.neon`/`.yaml`. It turns them into entities and inserts them to database.
-To understand fixture files, just check [nelmio/alice](https://github.com/nelmio/alice).
-
-
-This fixture will create 100 products with generated name:
+For example, this fixture will create 100 products with generated name:
 
 `fixtures/products.neon`
 
@@ -93,3 +87,17 @@ class SomeClass
 
 }
 ```
+
+That's it!
+
+
+## Testing
+
+```sh
+$ phpunit
+```
+
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
