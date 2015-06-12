@@ -1,9 +1,9 @@
 services:
-	- Zenify\DoctrineFixtures\Command\LoadFixturesCommand
 
 	# DataFixtures
 	- Doctrine\Common\DataFixtures\Executor\ORMExecutor
 	- Doctrine\Common\DataFixtures\Purger\ORMPurger
+	- Zenify\DoctrineFixtures\Command\LoadFixturesCommand
 	- Zenify\DoctrineFixtures\DataFixtures\Loader
 
 	# Alice
