@@ -2,7 +2,6 @@
 
 namespace Zenify\DoctrineFixtures\Tests\DI;
 
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Faker\Generator;
 use Nette\DI\Container;
 use PHPUnit_Framework_TestCase;
@@ -26,11 +25,6 @@ class FixturesExtensionTest extends PHPUnit_Framework_TestCase
 
 	public function testExtension()
 	{
-		$this->assertInstanceOf(
-			ORMPurger::class,
-			$this->container->getByType(ORMPurger::class)
-		);
-
 		$this->assertInstanceOf(
 			Generator::class,
 			$this->container->getByType(Generator::class)

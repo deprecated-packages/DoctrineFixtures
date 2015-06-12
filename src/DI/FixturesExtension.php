@@ -44,17 +44,8 @@ class FixturesExtension extends CompilerExtension
 		$containerBuilder = $this->getContainerBuilder();
 		$containerBuilder->prepareClassList();
 
-		$this->loadCommandToConsole();
 		$this->loadFakerProvidersToAliceLoader();
 		$this->loadParsersToAliceLoader();
-	}
-
-
-	private function loadCommandToConsole()
-	{
-		$applicationDefinition = $this->getDefinitionByType(Application::class);
-		$loadFixturesCommandDefinition = $this->getDefinitionByType(LoadFixturesCommand::class);
-		$applicationDefinition->addSetup('add', [$loadFixturesCommandDefinition->getClass()]);
 	}
 
 

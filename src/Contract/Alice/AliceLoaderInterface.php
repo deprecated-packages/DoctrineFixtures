@@ -7,10 +7,16 @@
 
 namespace Zenify\DoctrineFixtures\Contract\Alice;
 
-use Zenify\DoctrineFixtures\Contract\Loader\UniversalSourceLoaderInterface;
 
-
-interface AliceLoaderInterface extends UniversalSourceLoaderInterface
+interface AliceLoaderInterface
 {
+
+	/**
+	 * Loads fixtures from one or more files/folders.
+	 *
+	 * @param string|array $sources
+	 * @return object[]
+	 */
+	function load($sources);
 
 }

@@ -9,9 +9,8 @@
 
 This package implements all you need for effective dummy data generation:
 
-- [doctrine/data-fixtures](https://github.com/doctrine/data-fixtures) allows you to populate your dev database or provide data for tests.
-- [fzaninotto/Faker](https://github.com/fzaninotto/Faker) generates fake data.
 - [nelmio/alice](https://github.com/nelmio/alice) manages all that in config. This package adds *.neon* support.
+- [fzaninotto/Faker](https://github.com/fzaninotto/Faker) generates fake data.
 
 
 ## Install
@@ -30,12 +29,6 @@ extensions:
 	- Kdyby\Events\DI\EventsExtension
 	doctrine: Kdyby\Doctrine\DI\OrmExtension
 	fixtures: Zenify\DoctrineFixtures\DI\FixturesExtension
-
-doctrine:
-	host: localhost
-	user: root
-	password: 
-	dbname: database
 ```
 
 
@@ -52,13 +45,18 @@ fixtures:
 For all supported locales, just check [Faker Providers](https://github.com/fzaninotto/Faker/tree/master/src/Faker/Provider).
 
 
-### Fixture files 
+## Usage
 
-This extension loads fixtures from `*.neon` files, turns them into entities and inserts them to database.
 
+### Via [Alice](https://github.com/nelmio/alice)
+
+First is based on loading `.neon`/`.yaml`. It turns them into entities and inserts them to database.
 To understand fixture files, just check [nelmio/alice](https://github.com/nelmio/alice).
 
-Short example: this will create 100 products with generated name:
+
+This fixture will create 100 products with generated name:
+
+`fixtures/products.neon`
 
 ```yaml
 Zenify\DoctrineFixtures\Tests\Entity\Product:
@@ -66,14 +64,7 @@ Zenify\DoctrineFixtures\Tests\Entity\Product:
 		__construct: ["<shortName()>"]
 ```
 
-
-## Usage
-
-When you have your fixtures files ready, you have 2 options to load them:
-
-
-### Via [Alice](https://github.com/nelmio/alice)
-
+And then we can load them:
 
 ```php
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
@@ -96,57 +87,7 @@ class SomeClass
 	
 	public function loadFixtures()
 	{
-		$entities = $this->aliceLoader->load(__DIR__ . '/fixtures');
-		// ...
-	}
-
-}
-```
-
-
-
-
-### Via original DoctrineFixtures
-
-#### In CLI
-
-Run in console in your project's root:
-
-```sh
-# show all commands
-$ php www/index.php
- 
-# run fixture command 
-$ php www/index.php doctrine:fixtures:load 
-
-# get info about fixture command 
-$ php www/index.php doctrine:fixtures:load -h 
-```
-
-#### In the code 
-
-```php
-use Zenify\DoctrineFixtures\Contract\DataFixtures\DataFixturesLoaderInterface;
-
-
-class SomeClass
-{
-
-	/**
-	 * @var DataFixturesLoaderInterface
-	 */
-	private $dataFixturesLoader;
-
-
-	public function __construct(DataFixturesLoaderInterface $dataFixturesLoader)
-	{
-		$this->dataFixturesLoader = $dataFixturesLoader;
-	}
-	
-	
-	public function loadFixtures()
-	{
-		$entities = $this->fixturesLoader->load(__DIR__ . '/fixtures');
+		$entities = $this->aliceLoader->load(__DIR__ . '/fixtures'); // file(s) or dir(s) with fixtures
 		// ...
 	}
 
