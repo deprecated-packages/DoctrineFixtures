@@ -15,6 +15,7 @@ interface AliceLoaderInterface
 
 	/**
 	 * Loads fixtures from one or more files
+	 *
 	 * @param string|array $files
 	 * @return object[]
 	 */
