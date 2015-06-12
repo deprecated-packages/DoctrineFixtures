@@ -7,6 +7,8 @@
 
 namespace Zenify\DoctrineFixtures\Contract\Alice;
 
+use Exception;
+
 
 interface AliceLoaderInterface
 {
@@ -24,7 +26,7 @@ interface AliceLoaderInterface
 	 *
 	 * @param string $path
 	 * @return object[]
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	function loadFromDirectory($path);
 

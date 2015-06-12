@@ -26,16 +26,16 @@ Register extensions in `config.neon`:
 
 ```yaml
 extensions:
-    - Kdyby\Annotations\DI\AnnotationsExtension
-    - Kdyby\Events\DI\EventsExtension
-    doctrine: Kdyby\Doctrine\DI\OrmExtension
+	- Kdyby\Annotations\DI\AnnotationsExtension
+	- Kdyby\Events\DI\EventsExtension
+	doctrine: Kdyby\Doctrine\DI\OrmExtension
 	fixtures: Zenify\DoctrineFixtures\DI\FixturesExtension
 
 doctrine:
-    host: localhost
-    user: root
-    password: 
-    dbname: database
+	host: localhost
+	user: root
+	password: 
+	dbname: database
 ```
 
 
