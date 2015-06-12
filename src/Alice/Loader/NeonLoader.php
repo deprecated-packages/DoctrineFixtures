@@ -12,7 +12,7 @@ use Nette;
 use Nette\DI\Config\Helpers;
 
 
-class Neon extends Base
+class NeonLoader extends Base
 {
 
 	/**
