@@ -4,7 +4,7 @@ namespace Zenify\DoctrineFixtures\Tests\DoctrineFixtures;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\ORM\EntityRepository;
-use Zenify\DoctrineFixtures\DataFixtures\Loader;
+use Zenify\DoctrineFixtures\DataFixtures\DataFixturesLoader;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
 use Zenify\DoctrineFixtures\Tests\Entity\Product;
 
@@ -13,7 +13,7 @@ class DoctrineFixturesLoaderTest extends AbstractDatabaseTestCase
 {
 
 	/**
-	 * @var Loader
+	 * @var DataFixturesLoader
 	 */
 	private $fixturesLoader;
 
@@ -31,7 +31,7 @@ class DoctrineFixturesLoaderTest extends AbstractDatabaseTestCase
 	protected function setUp()
 	{
 		parent::setUp();
-		$this->fixturesLoader = $this->container->getByType(Loader::class);
+		$this->fixturesLoader = $this->container->getByType(DataFixturesLoader::class);
 		$this->productRepository = $this->entityManager->getRepository(Product::class);
 		$this->ormExecutor = $this->container->getByType(ORMExecutor::class);
 	}
