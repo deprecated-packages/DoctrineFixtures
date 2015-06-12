@@ -61,7 +61,7 @@ To understand fixture files, just check [nelmio/alice](https://github.com/nelmio
 Short example: this will create 100 products with generated name:
 
 ```yaml
-Zenify\DoctrineFixtures\Tests\Entities\Product:
+Zenify\DoctrineFixtures\Tests\Entity\Product:
 	"product{1..100}":
 		__construct: ["<shortName()>"]
 ```

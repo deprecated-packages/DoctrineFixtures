@@ -9,8 +9,8 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Zenify\DoctrineFixtures\Command\LoadFixturesCommand;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
-use Zenify\DoctrineFixtures\Tests\Entities\Product;
-use Zenify\DoctrineFixtures\Tests\Entities\User;
+use Zenify\DoctrineFixtures\Tests\Entity\Product;
+use Zenify\DoctrineFixtures\Tests\Entity\User;
 
 
 class LoadFixturesCommandTest extends AbstractDatabaseTestCase

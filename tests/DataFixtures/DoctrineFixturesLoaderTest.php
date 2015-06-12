@@ -6,7 +6,7 @@ use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\ORM\EntityRepository;
 use Zenify\DoctrineFixtures\DataFixtures\Loader;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
-use Zenify\DoctrineFixtures\Tests\Entities\Product;
+use Zenify\DoctrineFixtures\Tests\Entity\Product;
 
 
 class DoctrineFixturesLoaderTest extends AbstractDatabaseTestCase

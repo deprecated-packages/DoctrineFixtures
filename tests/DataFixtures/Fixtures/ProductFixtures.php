@@ -4,7 +4,7 @@ namespace Zenify\DoctrineFixtures\Tests\DataFixtures\Fixtures;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Zenify\DoctrineFixtures\Tests\Entities\Product;
+use Zenify\DoctrineFixtures\Tests\Entity\Product;
 
 
 class ProductFixtures implements FixtureInterface

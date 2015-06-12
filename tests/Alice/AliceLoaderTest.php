@@ -5,8 +5,8 @@ namespace Zenify\DoctrineFixtures\Tests\Alice;
 use Doctrine\ORM\EntityRepository;
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
-use Zenify\DoctrineFixtures\Tests\Entities\Product;
-use Zenify\DoctrineFixtures\Tests\Entities\User;
+use Zenify\DoctrineFixtures\Tests\Entity\Product;
+use Zenify\DoctrineFixtures\Tests\Entity\User;
 use Zenify\DoctrineFixtures\Tests\Faker\Providers\ProductName;
 
 

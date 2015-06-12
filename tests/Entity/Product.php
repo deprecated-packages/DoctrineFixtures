@@ -1,15 +1,15 @@
 <?php
 
-namespace Zenify\DoctrineFixtures\Tests\Entities;
+namespace Zenify\DoctrineFixtures\Tests\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="user")
+ * @ORM\Table(name="product")
  */
-class User
+class Product
 {
 
 	/**
@@ -24,15 +24,15 @@ class User
 	 * @ORM\Column(type="string", nullable=TRUE)
 	 * @var string
 	 */
-	private $email;
+	private $name;
 
 
 	/**
-	 * @param $email
+	 * @param string $name
 	 */
-	public function __construct($email)
+	public function __construct($name)
 	{
-		$this->email = $email;
+		$this->name = $name;
 	}
 
 
@@ -48,9 +48,9 @@ class User
 	/**
 	 * @return string
 	 */
-	public function getEmail()
+	public function getName()
 	{
-		return $this->email;
+		return $this->name;
 	}
 
 }
