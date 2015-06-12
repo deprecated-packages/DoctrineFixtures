@@ -4,13 +4,11 @@ namespace Zenify\DoctrineFixtures\Tests\Alice;
 
 use Doctrine\ORM\EntityRepository;
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
-use Zenify\DoctrineFixtures\Exception\MissingDirException;
-use Zenify\DoctrineFixtures\Exception\MissingFileException;
 use Zenify\DoctrineFixtures\Exception\MissingSourceException;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
 use Zenify\DoctrineFixtures\Tests\Entity\Product;
 use Zenify\DoctrineFixtures\Tests\Entity\User;
-use Zenify\DoctrineFixtures\Tests\Faker\Providers\ProductName;
+use Zenify\DoctrineFixtures\Tests\Faker\Provider\ProductName;
 
 
 class AliceLoaderTest extends AbstractDatabaseTestCase

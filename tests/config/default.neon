@@ -1,6 +1,6 @@
 services:
 	- Zenify\DoctrineFixtures\Tests\DatabaseLoader
-	- Zenify\DoctrineFixtures\Tests\Faker\Providers\ProductName
+	- Zenify\DoctrineFixtures\Tests\Faker\Provider\ProductName
 
 
 extensions:

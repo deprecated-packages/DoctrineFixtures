@@ -46,18 +46,7 @@ class AliceLoader implements AliceLoaderInterface
 
 		$entities = [];
 		foreach ($sources as $source) {
-			if (is_file($source)) {
-				$newEntities = $this->loadFromFile($source);
-
-			} elseif (is_dir($source)) {
-				$newEntities = $this->loadFromDirectory($source);
-
-			} else {
-				throw new MissingSourceException(
-					sprintf('Source "%s" was not found.', $source)
-				);
-			}
-
+			$newEntities = $this->loadEntitiesFromSource($source);
 			$entities = array_merge($entities, $newEntities);
 		}
 
@@ -68,13 +57,33 @@ class AliceLoader implements AliceLoaderInterface
 
 
 	/**
+	 * @param $source
+	 * @return object[]
+	 * @throws MissingSourceException
+	 */
+	private function loadEntitiesFromSource($source)
+	{
+		if (is_file($source)) {
+			return $this->loadFromFile($source);
+
+		} elseif (is_dir($source)) {
+			return $this->loadFromDirectory($source);
+
+		} else {
+			throw new MissingSourceException(
+				sprintf('Source "%s" was not found.', $source)
+			);
+		}
+	}
+
+
+	/**
 	 * @param string $path
 	 * @return object[]
 	 */
 	private function loadFromFile($path)
 	{
 		$entities = $this->aliceLoader->load($path);
-
 		foreach ($entities as $entity) {
 			$this->entityManager->persist($entity);
 		}
@@ -88,7 +97,7 @@ class AliceLoader implements AliceLoaderInterface
 	private function loadFromDirectory($path)
 	{
 		$files = [];
-		foreach (Finder::find('*.neon')->from($path) as $file) {
+		foreach (Finder::find(['*.neon', '*.yaml', '*.yml'])->from($path) as $file) {
 			$files[] = $file;
 		}
 		return $this->load($files);
