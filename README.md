@@ -45,13 +45,11 @@ doctrine:
 # default values
 fixtures:
 	alice:
+		locale: "cs_CZ" # e.g. change to en_US in case you want to use English
 		seed: 1
-		locale: "cs_CZ"
-
-services:
-	- Zenify\DoctrineFixtures\Alice\Loader\Neon
-
 ```
+
+For all supported locales, just check [Faker Providers](https://github.com/fzaninotto/Faker/tree/master/src/Faker/Provider).
 
 
 ### Fixture files 
