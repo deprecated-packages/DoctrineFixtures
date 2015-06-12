@@ -106,7 +106,8 @@ class SomeClass
 	
 	public function loadFixtures()
 	{
-		$entities = $this->aliceLoader->load(__DIR__ . '/fixtures'); // file(s) or dir(s) with fixtures
+		// as arg can be used file(s) or dir(s) with fixtures
+		$entities = $this->aliceLoader->load(__DIR__ . '/fixtures');
 		// ...
 	}
 
