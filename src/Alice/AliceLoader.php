@@ -9,9 +9,12 @@ namespace Zenify\DoctrineFixtures\Alice;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Nette\Utils\Finder;
+use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
+use Zenify\DoctrineFixtures\Exception\MissingDirException;
+use Zenify\DoctrineFixtures\Exception\MissingFileException;
 
 
-class AliceLoader
+class AliceLoader implements AliceLoaderInterface
 {
 
 	/**
@@ -33,9 +36,7 @@ class AliceLoader
 
 
 	/**
-	 * Loads fixtures from one or more files
-	 * @param string|array $files
-	 * @return object[]
+	 * {@inheritdoc}
 	 */
 	public function load($files)
 	{
@@ -45,9 +46,8 @@ class AliceLoader
 
 		$objects = [];
 		foreach ($files as $file) {
-			if ( ! file_exists($file)) {
-				throw new \Exception("File $file not found");
-			}
+			$this->ensureFileExists($file);
+
 			$set = $this->neonLoader->load($file);
 			foreach ($set as $entity) {
 				$this->entityManager->persist($entity);
@@ -61,17 +61,11 @@ class AliceLoader
 
 
 	/**
-	 * Load all neon fixtures files from folder
-	 *
-	 * @param string $path
-	 * @return object[]
-	 * @throws \Exception
+	 * {@inheritdoc}
 	 */
 	public function loadFromDirectory($path)
 	{
-		if ( ! is_dir($path)) {
-			throw new \Exception("Folder $path not found.");
-		}
+		$this->ensureDirExists($path);
 
 		$files = [];
 		foreach (Finder::find('*.neon')->from($path) as $file) {
@@ -79,6 +73,34 @@ class AliceLoader
 		}
 
 		return $this->load($files);
+	}
+
+
+	/**
+	 * @param string $path
+	 * @throws MissingDirException
+	 */
+	private function ensureDirExists($path)
+	{
+		if ( ! is_dir($path)) {
+			throw new MissingDirException(
+				sprintf('Directory "%s" was not found.', $path)
+			);
+		}
+	}
+
+
+	/**
+	 * @param string $file
+	 * @throws MissingFileException
+	 */
+	private function ensureFileExists($file)
+	{
+		if ( ! file_exists($file)) {
+			throw new MissingFileException(
+				sprintf('File "%s" was not found', $file)
+			);
+		}
 	}
 
 }
