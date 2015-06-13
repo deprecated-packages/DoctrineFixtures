@@ -58,9 +58,9 @@ Zenify\DoctrineFixtures\Tests\Entity\Product:
 		__construct: ["<shortName()>"]
 ```
 
-You can also include others fixures:
+### You can also include other fixtures
 
-`products.neon`
+`fixtures/products.neon`
 
 ```yaml
 includes:
@@ -72,7 +72,7 @@ Zenify\DoctrineFixtures\Tests\Entity\Product:
 		category: "@category@brand<numberBetween(1, 10)>"
 ```
 
-`categories.neon`
+`fixtures/categories.neon`
 
 ```yaml
 Zenify\DoctrineFixtures\Tests\Entity\Category:
@@ -106,7 +106,7 @@ class SomeClass
 	
 	public function loadFixtures()
 	{
-		// as arg can be used file(s) or dir(s) with fixtures
+		// arg can be used file(s) or dir(s) with fixtures
 		$entities = $this->aliceLoader->load(__DIR__ . '/fixtures');
 		// ...
 	}
