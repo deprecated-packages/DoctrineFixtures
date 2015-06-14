@@ -12,9 +12,6 @@ use Nelmio\Alice\Fixtures\Loader;
 use Nelmio\Alice\Fixtures\Parser\Methods\MethodInterface;
 use Nette\DI\CompilerExtension;
 use Nette\DI\ServiceDefinition;
-use Nette\Utils\Validators;
-use Symfony\Component\Console\Application;
-use Zenify\DoctrineFixtures\Command\LoadFixturesCommand;
 
 
 class FixturesExtension extends CompilerExtension
