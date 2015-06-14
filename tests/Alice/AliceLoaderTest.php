@@ -41,7 +41,7 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 
 	public function testLoadFixture()
 	{
-		$file = __DIR__ . '/fixtures/products.neon';
+		$file = __DIR__ . '/AliceLoaderSource/products.neon';
 		$this->fixturesLoader->load($file);
 
 		$products = $this->productRepository->findAll();
@@ -58,14 +58,14 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 
 	public function testLoadFolder()
 	{
-		$dir = __DIR__ . '/fixtures';
+		$dir = __DIR__ . '/AliceLoaderSource';
 		$this->fixturesLoader->load($dir);
 
 		$products = $this->productRepository->findAll();
 		$this->assertCount(120, $products);
 
 		$users = $this->userRepository->findAll();
-		$this->assertCount(10, $users);
+		$this->assertCount(15, $users);
 
 		/** @var User $user */
 		foreach ($users as $user) {
@@ -77,7 +77,7 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 
 	public function testLoadFixtureWithIncludesFixturesAreLoadedInTopDownOrder()
 	{
-		$file = __DIR__ . '/fixturesWithIncludes/includes.neon';
+		$file = __DIR__ . '/AliceLoaderSource/includes.neon';
 		$this->fixturesLoader->load($file);
 
 		/** @var User[] $users */

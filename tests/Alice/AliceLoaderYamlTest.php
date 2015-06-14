@@ -26,7 +26,7 @@ class AliceLoaderYamlTest extends AbstractDatabaseTestCase
 
 	public function testLoadFixture()
 	{
-		$file = __DIR__ . '/fixtures/products.yaml';
+		$file = __DIR__ . '/AliceLoaderSource/products.yaml';
 
 		/** @var Product[] $products */
 		$products = $this->fixturesLoader->load($file);
