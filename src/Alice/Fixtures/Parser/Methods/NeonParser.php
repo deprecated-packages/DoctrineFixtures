@@ -55,15 +55,33 @@ class NeonParser extends Base
 	 */
 	protected function processIncludes($data, $filename)
 	{
-		if (isset($data['includes'])) {
-			foreach ($data['includes'] as $include) {
+		$includeKeywords = [
+			'include',
+			'includes' // BC
+		];
+		foreach ($includeKeywords as $includeKeyword) {
+			$data = $this->mergeIncludedFiles($data, $filename, $includeKeyword);
+		}
+
+		return $data;
+	}
+
+
+	/**
+	 * @param array $data
+	 * @param string $includeKeyword
+	 * @return array
+	 */
+	private function mergeIncludedFiles($data, $filename, $includeKeyword)
+	{
+		if (isset($data[$includeKeyword])) {
+			foreach ($data[$includeKeyword] as $include) {
 				$includeFile = dirname($filename) . DIRECTORY_SEPARATOR . $include;
 				$includeData = $this->parse($includeFile);
 				$data = Helpers::merge($includeData, $data);
 			}
-			unset($data['includes']);
+			unset($data[$includeKeyword]);
 		}
-
 		return $data;
 	}
 

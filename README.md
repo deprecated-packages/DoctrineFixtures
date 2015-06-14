@@ -63,7 +63,7 @@ Zenify\DoctrineFixtures\Tests\Entity\Product:
 `fixtures/products.neon`
 
 ```yaml
-includes:
+include:
 	- categories.neon
 
 Zenify\DoctrineFixtures\Tests\Entity\Product:
@@ -79,8 +79,6 @@ Zenify\DoctrineFixtures\Tests\Entity\Category:
 	"category{1..10}":
 		__construct: ["<shortName()>"]
 ```
-
-Note: the keyword is `include` for `yaml` files.
 
 
 And then we can load them:
