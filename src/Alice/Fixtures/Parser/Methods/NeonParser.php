@@ -39,7 +39,7 @@ class NeonParser extends Base
 		if ($data === 1) {
 			// include didn't return data but included correctly, parse it as yaml
 			$neon = ob_get_clean();
-			$data = Neon::decode($neon);
+			$data = Neon::decode($neon) ?: [];
 
 		} else {
 			// make sure to clean up if there is a failure
