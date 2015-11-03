@@ -14,7 +14,7 @@ use Nette\DI\CompilerExtension;
 use Nette\DI\ServiceDefinition;
 
 
-class FixturesExtension extends CompilerExtension
+final class FixturesExtension extends CompilerExtension
 {
 
 	/**
@@ -26,6 +26,9 @@ class FixturesExtension extends CompilerExtension
 	];
 
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function loadConfiguration()
 	{
 		$containerBuilder = $this->getContainerBuilder();
@@ -34,6 +37,9 @@ class FixturesExtension extends CompilerExtension
 	}
 
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function beforeCompile()
 	{
 		$containerBuilder = $this->getContainerBuilder();

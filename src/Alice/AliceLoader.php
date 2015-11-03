@@ -14,7 +14,7 @@ use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
 use Zenify\DoctrineFixtures\Exception\MissingSourceException;
 
 
-class AliceLoader implements AliceLoaderInterface
+final class AliceLoader implements AliceLoaderInterface
 {
 
 	/**
