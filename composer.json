@@ -12,6 +12,7 @@
 		"nelmio/alice": "~2.0",
 		"nette/di": "~2.3",
 		"nette/finder": "~2.3",
+		"nette/reflection": "~2.3",
 		"symfony/console": "^2.7|^3.0",
 		"tracy/tracy": "~2.3"
 	},
