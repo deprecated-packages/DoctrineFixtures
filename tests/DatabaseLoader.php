@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zenify\DoctrineFixtures\Tests;
 
 use Doctrine\DBAL\Connection;
 
 
-class DatabaseLoader
+final class DatabaseLoader
 {
 
 	/**

@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of Zenify
  * Copyright (c) 2012 Tomas Votruba (http://tomasvotruba.cz)
  */
@@ -12,17 +14,18 @@ use Nette\DI\Config\Helpers;
 use Nette\Neon\Neon;
 
 
-class NeonParser extends Base
+final class NeonParser extends Base
 {
 
 	/**
-	 * {@inheritdoc}
+	 * @var string
 	 */
 	protected $extension = 'neon';
 
 
 	/**
-	 * {@inheritdoc}
+	 * @param string $file
+	 * @return string
 	 */
 	public function parse($file)
 	{
@@ -51,7 +54,9 @@ class NeonParser extends Base
 
 
 	/**
-	 * {@inheritdoc}
+	 * @param array $data
+	 * @param string $filename
+	 * @return array
 	 */
 	protected function processIncludes($data, $filename)
 	{
@@ -67,12 +72,7 @@ class NeonParser extends Base
 	}
 
 
-	/**
-	 * @param array $data
-	 * @param string $includeKeyword
-	 * @return array
-	 */
-	private function mergeIncludedFiles($data, $filename, $includeKeyword)
+	private function mergeIncludedFiles(array $data, string $filename, string $includeKeyword) : array
 	{
 		if (isset($data[$includeKeyword])) {
 			foreach ($data[$includeKeyword] as $include) {

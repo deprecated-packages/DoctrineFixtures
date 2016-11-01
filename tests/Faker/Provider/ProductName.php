@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zenify\DoctrineFixtures\Tests\Faker\Provider;
 
 use Faker\Provider\Base;
 
 
-class ProductName extends Base
+final class ProductName extends Base
 {
 
 	/**
@@ -18,10 +20,7 @@ class ProductName extends Base
 	];
 
 
-	/**
-	 * @return string
-	 */
-	public function shortName()
+	public function shortName() : string
 	{
 		return $this->randomElement(self::$randomNames);
 	}

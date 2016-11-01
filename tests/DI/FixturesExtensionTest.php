@@ -1,21 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zenify\DoctrineFixtures\Tests\DI;
 
-use Faker\Generator;
 use Faker\Provider\cs_CZ\Company;
 use Nelmio\Alice\Fixtures\Loader;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerBuilder;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Zenify\DoctrineFixtures\Alice\AliceLoader;
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
 use Zenify\DoctrineFixtures\DI\FixturesExtension;
 use Zenify\DoctrineFixtures\Tests\ContainerFactory;
 
 
-class FixturesExtensionTest extends PHPUnit_Framework_TestCase
+final class FixturesExtensionTest extends TestCase
 {
 
 	/**
@@ -81,10 +82,7 @@ class FixturesExtensionTest extends PHPUnit_Framework_TestCase
 	}
 
 
-	/**
-	 * @return FixturesExtension
-	 */
-	private function getExtension()
+	private function getExtension() : FixturesExtension
 	{
 		$extension = new FixturesExtension;
 		$extension->setCompiler(new Compiler(new ContainerBuilder), 'fixtures');

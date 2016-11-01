@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zenify\DoctrineFixtures\Tests\Alice;
 
 use Doctrine\ORM\EntityRepository;
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
-use Zenify\DoctrineFixtures\Exception\MissingSourceException;
 use Zenify\DoctrineFixtures\Tests\AbstractDatabaseTestCase;
 use Zenify\DoctrineFixtures\Tests\Entity\Product;
 use Zenify\DoctrineFixtures\Tests\Entity\User;
 use Zenify\DoctrineFixtures\Tests\Faker\Provider\ProductName;
 
 
-class AliceLoaderTest extends AbstractDatabaseTestCase
+final class AliceLoaderTest extends AbstractDatabaseTestCase
 {
 
 	/**
@@ -58,8 +59,7 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 
 	public function testLoadFolder()
 	{
-		$dir = __DIR__ . '/AliceLoaderSource';
-		$this->fixturesLoader->load($dir);
+		$this->fixturesLoader->load(__DIR__ . '/AliceLoaderSource');
 
 		$products = $this->productRepository->findAll();
 		$this->assertCount(120, $products);
@@ -92,9 +92,11 @@ class AliceLoaderTest extends AbstractDatabaseTestCase
 	}
 
 
+	/**
+	 * @expectedException \Zenify\DoctrineFixtures\Exception\MissingSourceException
+	 */
 	public function testLoadFromNonExistingSource()
 	{
-		$this->setExpectedException(MissingSourceException::class);
 		$this->fixturesLoader->load(__DIR__ . '/not-in-here');
 	}
 

@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of Zenify
  * Copyright (c) 2012 Tomas Votruba (http://tomasvotruba.cz)
  */
@@ -10,6 +12,7 @@ namespace Zenify\DoctrineFixtures\Alice;
 use Doctrine\ORM\EntityManagerInterface;
 use Nelmio\Alice\Fixtures\Loader;
 use Nette\Utils\Finder;
+use SplFileInfo;
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
 use Zenify\DoctrineFixtures\Exception\MissingSourceException;
 
@@ -36,9 +39,10 @@ final class AliceLoader implements AliceLoaderInterface
 
 
 	/**
-	 * {@inheritdoc}
+	 * @param string|array $sources
+	 * @return object[]
 	 */
-	public function load($sources)
+	public function load($sources) : array
 	{
 		if ( ! is_array($sources)) {
 			$sources = [$sources];
@@ -57,31 +61,28 @@ final class AliceLoader implements AliceLoaderInterface
 
 
 	/**
-	 * @param $source
+	 * @param mixed $source
 	 * @return object[]
-	 * @throws MissingSourceException
 	 */
-	private function loadEntitiesFromSource($source)
+	private function loadEntitiesFromSource($source) : array
 	{
 		if (is_dir($source)) {
 			return $this->loadFromDirectory($source);
 
 		} elseif (is_file($source)) {
 			return $this->loadFromFile($source);
-
-		} else {
-			throw new MissingSourceException(
-				sprintf('Source "%s" was not found.', $source)
-			);
 		}
+
+		throw new MissingSourceException(
+			sprintf('Source "%s" was not found.', $source)
+		);
 	}
 
 
 	/**
-	 * @param string $path
 	 * @return object[]
 	 */
-	private function loadFromFile($path)
+	private function loadFromFile(string $path) : array
 	{
 		$entities = $this->aliceLoader->load($path);
 		foreach ($entities as $entity) {
@@ -91,14 +92,12 @@ final class AliceLoader implements AliceLoaderInterface
 	}
 
 
-	/**
-	 * {@inheritdoc}
-	 */
-	private function loadFromDirectory($path)
+	private function loadFromDirectory(string $path) : array
 	{
 		$files = [];
-		foreach (Finder::find(['*.neon', '*.yaml', '*.yml'])->from($path) as $file) {
-			$files[] = $file;
+		foreach (Finder::find('*.neon', '*.yaml', '*.yml')->from($path) as $file) {
+			/** @var SplFileInfo $file */
+			$files[] = $file->getPathname();
 		}
 		return $this->load($files);
 	}

@@ -1,6 +1,8 @@
 <?php
 
-/**
+declare(strict_types=1);
+
+/*
  * This file is part of Zenify
  * Copyright (c) 2012 Tomas Votruba (http://tomasvotruba.cz)
  */
@@ -26,9 +28,6 @@ final class FixturesExtension extends CompilerExtension
 	];
 
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function loadConfiguration()
 	{
 		$containerBuilder = $this->getContainerBuilder();
@@ -37,9 +36,6 @@ final class FixturesExtension extends CompilerExtension
 	}
 
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function beforeCompile()
 	{
 		$containerBuilder = $this->getContainerBuilder();
@@ -74,11 +70,7 @@ final class FixturesExtension extends CompilerExtension
 	}
 
 
-	/**
-	 * @param string $type
-	 * @return ServiceDefinition
-	 */
-	private function getDefinitionByType($type)
+	private function getDefinitionByType(string $type) : ServiceDefinition
 	{
 		$containerBuilder = $this->getContainerBuilder();
 		return $containerBuilder->getDefinition($containerBuilder->getByType($type));
