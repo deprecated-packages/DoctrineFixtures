@@ -1,19 +1,16 @@
 <?php
 
-/**
- * This file is part of Zenify
- * Copyright (c) 2012 Tomas Votruba (http://tomasvotruba.cz)
- */
+declare(strict_types=1);
 
 namespace Zenify\DoctrineFixtures\Tests\Alice\Fixtures\Parser\Methods;
 
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Zenify\DoctrineFixtures\Alice\Fixtures\Parser\Methods\NeonParser;
 use Zenify\DoctrineFixtures\Tests\Entity\Product;
 use Zenify\DoctrineFixtures\Tests\Entity\User;
 
 
-class NeonParserTest extends PHPUnit_Framework_TestCase
+final class NeonParserTest extends TestCase
 {
 
 	/**
@@ -38,18 +35,18 @@ class NeonParserTest extends PHPUnit_Framework_TestCase
 	public function testParse()
 	{
 		$entities = $this->neonParser->parse(__DIR__ . '/NeonParserSource/products.neon');
-		$this->arrayHasKey(Product::class, $entities);
-		$this->arrayHasKey('product{1..5}', $entities[Product::class]);
+		$this->assertArrayHasKey(Product::class, $entities);
+		$this->assertArrayHasKey('product{1..5}', $entities[Product::class]);
 	}
 
 
 	public function testInclude()
 	{
 		$entities = $this->neonParser->parse(__DIR__ . '/NeonParserSource/include.neon');
-		$this->arrayHasKey(User::class, $entities);
+		$this->assertArrayHasKey(User::class, $entities);
 
 		$entities = $this->neonParser->parse(__DIR__ . '/NeonParserSource/includes.neon');
-		$this->arrayHasKey(User::class, $entities);
+		$this->assertArrayHasKey(User::class, $entities);
 	}
 
 }

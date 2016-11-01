@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zenify\DoctrineFixtures\Tests\Alice;
 
 use Zenify\DoctrineFixtures\Contract\Alice\AliceLoaderInterface;
@@ -8,7 +10,7 @@ use Zenify\DoctrineFixtures\Tests\Entity\Product;
 use Zenify\DoctrineFixtures\Tests\Faker\Provider\ProductName;
 
 
-class AliceLoaderYamlTest extends AbstractDatabaseTestCase
+final class AliceLoaderYamlTest extends AbstractDatabaseTestCase
 {
 
 	/**

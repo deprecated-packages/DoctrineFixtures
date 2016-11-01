@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Zenify\DoctrineFixtures\Tests;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Nette\DI\Container;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
 
-abstract class AbstractDatabaseTestCase extends PHPUnit_Framework_TestCase
+abstract class AbstractDatabaseTestCase extends TestCase
 {
 
 	/**
