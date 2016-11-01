@@ -20,6 +20,7 @@ final class ContainerFactory
 		return $configurator->createContainer();
 	}
 
+
 	private function createAndReturnTempDir() : string
 	{
 		$tempDir = sys_get_temp_dir() . '/doctrine-fixtures';
@@ -27,4 +28,5 @@ final class ContainerFactory
 		FileSystem::createDir($tempDir);
 		return $tempDir;
 	}
+
 }

@@ -54,7 +54,6 @@ final class AliceLoader implements AliceLoaderInterface
 			$entities = array_merge($entities, $newEntities);
 		}
 
-
 		$this->entityManager->flush();
 
 		return $entities;
