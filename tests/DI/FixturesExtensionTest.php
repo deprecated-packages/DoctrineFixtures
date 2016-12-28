@@ -25,7 +25,7 @@ final class FixturesExtensionTest extends TestCase
 	private $container;
 
 
-	public function __construct()
+	protected function setUp()
 	{
 		$this->container = (new ContainerFactory)->create();
 	}

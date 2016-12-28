@@ -23,14 +23,10 @@ abstract class AbstractDatabaseTestCase extends TestCase
 	protected $entityManager;
 
 
-	public function __construct()
-	{
-		$this->container = $container = (new ContainerFactory)->create();
-	}
-
-
 	protected function setUp()
 	{
+		$this->container = $container = (new ContainerFactory)->create();
+
 		$this->entityManager = $this->container->getByType(EntityManagerInterface::class);
 
 		/** @var DatabaseLoader $databaseLoader */
